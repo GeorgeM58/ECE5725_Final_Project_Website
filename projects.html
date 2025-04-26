@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects - George Maidhof</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fdfdfd;
+      color: #333;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(135deg, #5fbf77, #2c7a4d);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      animation: slideDown 0.6s ease-in-out;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #d4f5e9;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .container {
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: auto;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .container h2 {
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+      text-align: left;
+    }
+
+    .resume-section {
+      margin-bottom: 40px;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .resume-section:hover {
+      transform: scale(1.02);
+    }
+
+    .resume-section h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: #2c7a4d;
+    }
+
+    .resume-section p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .project-details {
+      display: none;
+      margin-top: 15px;
+      animation: fadeIn 0.5s ease forwards;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+    }
+
+    .project {
+      margin-bottom: 20px;
+    }
+
+    .project h4 {
+      margin: 10px 0 5px;
+      font-size: 1.2rem;
+      color: #2c7a4d;
+    }
+
+    .project p {
+      margin: 0 0 10px;
+    }
+
+    .project img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 10px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .toggle-button {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 8px 16px;
+      background: #2c7a4d;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .toggle-button:hover {
+      background: #25623c;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sticky Nav -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="projects.html">Projects</a>
+    <a href="photos.html">Photos</a>
+    <a href="GeorgeMaidhof Resume.pdf" download>Resume</a>
+  </nav>
+
+  <div class="container">
+    <h2>Project Portfolio</h2>
+
+    <div class="resume-section">
+      <h3>Research</h3>
+      <p>Dive into my Research in Compilers, FPGAs Optimization, Data Interpretiation, and Verification</p>
+      <button class="toggle-button" onclick="toggleDetails('research-details')">View Details</button>
+      <div class="project-details" id="research-details">
+        <div class="project">
+          <h4>MEng Project: ML Model for FPGA Optimization During Allocation</h4>
+          <p>TBD</p>
+          <h4>Undergraduate Research: MLIR FPGA Compiler</h4>
+          <p>TBD</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="resume-section">
+      <h3>Project Teams</h3>
+      <p>Engineering and Non-Engineering Teams I Worked on to Solve Real-World Problems</p>
+      <button class="toggle-button" onclick="toggleDetails('teams-details')">View Details</button>
+      <div class="project-details" id="teams-details">
+        <div class="project">
+          <h4>Project Team Nexus</h4>
+          <img src="images/ai_checker.jpg">
+          <p>TBD
+            <a href="https://www.cornellnexus.com/" target="_blank">See our Website!</a>.
+          </p>
+          <h4>Engineering Leadership Program: CUBeeHappy</h4>
+          <img src="images/ai_checker.jpg">
+          <p>TBD</p>
+          <h4>Cornell Animal Health Hackathon</h4>
+          <img src="images/ai_checker.jpg">
+          <p>TBD
+            <a href="https://devpost.com/project/ai-checker" target="_blank">See submission</a>.
+          </p>
+          <h4>Cornell Digital Agriculture Hackathon</h4>
+          <img src="images/ai_checker.jpg">
+          <p>TBD
+            <a href="https://devpost.com/project/ai-checker" target="_blank">See submission</a>.
+          </p>
+          <h4>Cornell Makathon</h4>
+          <img src="images/ai_checker.jpg">
+          <p>TBD
+            <a href="https://devpost.com/project/ai-checker" target="_blank">See submission</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="resume-section">
+      <h3>Class Projects</h3>
+      <p>University coursework turned into functional builds demonstrating deep technical knowledge.</p>
+      <button class="toggle-button" onclick="toggleDetails('class-details')">View Details</button>
+      <div class="project-details" id="class-details">
+        <div class="project">
+          <h4>RC Car for ECE 3140</h4>
+          <img src="images/rc_car.jpg" alt="RC Car" />
+          <p>Designed and programmed a Bluetooth-controlled RC car using an Arduino and mobile interface. <a
+              href="https://github.com/username/rc-car" target="_blank">GitHub Repo</a></p>
+        </div>
+        <div class="project">
+          <h4>Sand Box Topographic Map for ECE 5725</h4>
+          <img src="images/sandbox_map.jpg" alt="Sandbox Map" />
+          <p>Built an augmented reality sandbox with real-time topographic projection using Kinect and a Raspberry Pi.
+          </p>
+        </div>
+        <div class="project">
+          <h4>Smart Watch for ECE 5730</h4>
+          <img src="images/smartwatch.jpg" alt="Smartwatch" />
+          <p>Created a custom smartwatch prototype with real-time data tracking and Wi-Fi synchronization.</p>
+        </div>
+        <div class="project">
+          <h4>8-Bit ALU in Cadence Verisium for ECE 4760</h4>
+          <img src="images/alu.jpg" alt="8-bit ALU" />
+          <p>Designed an 8-bit arithmetic logic unit in Verilog and verified functionality in Cadence simulation.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="resume-section">
+      <h3>Work Experience</h3>
+      <p>Professional Work Experience in the Field of Electrical and Computer Engineering</p>
+      <button class="toggle-button" onclick="toggleDetails('work-details')">View Details</button>
+      <div class="project-details" id="work-details">
+        <div class="project">
+          <h4>Logical Design and Digital Verification Engineer Intern</h4>
+          <img src="projects/marvell.png" alt="Internship" />
+          <p> <a href="https://www.marvell.com/" target="_blank">Company Website</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDetails(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === "block" ? "none" : "block";
+    }
+  </script>
+</body>
+
+</html>
