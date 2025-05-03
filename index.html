@@ -203,46 +203,177 @@
 
   <!-- Sticky Nav -->
   <nav>
-    <a href="index.html">Home</a>
-    <a href="projects.html">Projects</a>
-    <a href="photos.html">Photos</a>
-    <a href="GeorgeMaidhof Resume.pdf" download>Resume</a>
+    <a onclick="document.getElementById('Introduction').scrollIntoView({ behavior: 'smooth' });">
+      Introduction
+    </a>
+    <a onclick="document.getElementById('Project Objective').scrollIntoView({ behavior: 'smooth' });">
+      Project Objective
+    </a>
+    <a onclick="document.getElementById('Design').scrollIntoView({ behavior: 'smooth' });">
+      Design
+    </a>
+    <a onclick="document.getElementById('Drawings').scrollIntoView({ behavior: 'smooth' });">
+      Drawings
+    </a>
+    <a onclick="document.getElementById('Testing').scrollIntoView({ behavior: 'smooth' });">
+      Testing
+    </a>
+    <a onclick="document.getElementById('Result').scrollIntoView({ behavior: 'smooth' });">
+      Result
+    </a>
   </nav>
 
   <!-- Hero / Home Section -->
   <header id="home">
-    <h1>Hello, I'm George Maidhof</h1>
-    <p>Aspiring Logical Design Engineer In Tech!</p>
-    <div class="scroll-down" onclick="document.getElementById('about').scrollIntoView({ behavior: 'smooth' });">
-      ↓ Scroll Down
+    <h1>Kinect the Dots</h1>
+    <p>A Smart Sandbox Experience</p>
+    <div class="scroll-down" onclick="document.getElementById('Introduction').scrollIntoView({ behavior: 'smooth' });">
+      ↓ Being Experience
     </div>
   </header>
 
   <!-- About Me Section -->
-  <section id="about">
-    <h2>About Me</h2>
+
+  <section id="Introduction">
+    <h2>Introduction</h2>
+    <p>
+      In this project, we created an interactive augmented reality sandbox that visualizes real-time topographical data using a Microsoft Xbox 360 Kinect and a Raspberry Pi. 
+      The Kinect captures a continuous stream of depth information, generating 480x640 arrays of Z-values that represent the height of the sand surface. 
+      These depth values are processed in real time and mapped to a dynamic color gradient, simulating elevation-based coloration such as that found on topographic maps. 
+      The resulting color map is then projected directly onto the sandbox surface, creating a live, responsive display that updates as the sand is moved. 
+      We also integrated GPIO-controlled buttons on the Raspberry Pi to easily start and stop the system, providing a smooth and interactive user experience.
+    </p>
+  </section>
+
+  <section id="Project Objective">
+    <h2>Project Objective</h2>
+    <p>
+      The goal of this project was to design and build an engaging, interactive sandbox that transforms physical play into a digital experience using real-time depth sensing and projection. 
+      Inspired by our childhood experiences and a desire to explore camera-based technology, we developed a system that encourages user interaction by allowing changes in the sand's shape to be reflected in a dynamic, color-mapped projection. 
+      This project serves as a creative application of concepts learned in class—particularly GPIO control and real-time data processing with the Raspberry Pi, while also offering a fun demonstration of how physical input can drive digital output in an intuitive and entertaining way.
+    </p>
+  </section>
+
+  <section id="Design">
+    <h2>Design</h2>
+    <p>
+      This project integrates hardware and software components to create a responsive, real-time augmented reality sandbox. 
+      The system is designed to capture live depth data from a Microsoft Xbox 360 Kinect sensor, process it using a Raspberry Pi 4, and project a corresponding color-mapped topographic image onto a physical sandbox. 
+      The primary goal of the design was to create an interactive system that visually responds to changes in the sand surface.
+    </p>
+    <br/>
+
+    <h4>System Architecture Overview</h4>
+    <p>
+      The core components include the Kinect 1414 depth sensor, a Raspberry Pi 4, a vertically-mounted projector, and physical GPIO buttons for control. 
+      The Kinect captures a live 480x640 stream of depth data which is sent to the Raspberry Pi via USB. 
+      The Raspberry Pi processes this depth data and generates a colorized image representing terrain elevation, which is then projected directly onto the sandbox.
+      GPIO buttons connected to the Pi allow users to start and stop the visualization system.
+    </p>
+    <br/>
+
+    <h4>Hardware Design</h4>
+    <p>
+      Sensors & Processing: The Xbox 360 Kinect 1414 serves as the depth sensor, interfacing directly with the Raspberry Pi 4 over USB. The Kinect provides a continuous stream of z-values corresponding to the depth of points within its field of view.
+    </p>
+    <p>
+      Projection Setup: A standard overhead projector, provided by Professor Skovira, is mounted above the sandbox and aligned vertically to ensure proper projection coverage and minimize distortion.
+    </p>
+    <p>
+      GPIO Controls: Two physical buttons are wired to the Raspberry Pi’s GPIO pins—one for starting and one for stopping the system. These allow the user to initiate or terminate the program without using a keyboard or SSH interface.
+    </p>
+    <br/>
+
+    <h4>Software Architecture</h4>
+    <p>
+      The system software is implemented using a combination of C and Python, leveraging the strengths of each language:
+    </p>
+    <p>
+      C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was made to improve real-time responsiveness given the Raspberry Pi’s limited processing power.
+    </p>
+    <p>
+      Python Script: Manages GPIO input and user interaction. A Python loop listens for GPIO button presses and controls the lifecycle of the C-based visualization subprocess.
+    </p>
+    <br/>
+
+    <h4>Data Processing Pipeline</h4>
+    <p>
+      Once the system is initialized via the start button:
+    </p>
+    <p>
+      1) The Kinect begins streaming depth data.
+    </p>
+    <p>
+      2) The C program uses the freenect_set_depth_callback function to access 480x640 frames of raw depth values.
+    </p>
+    <p>
+      3) Each depth value is compared against predefined minimum and maximum thresholds.
+    </p>
+    <p>
+      4) Based on this depth, a color (RGB) value is calculated using a scalar mapping technique and if a depth value falls outside the expected range, it is rendered in red to signal an anomaly or invalid input.
+    </p>
+    <p>
+      5) The final color-mapped image is sent to the projector, which overlays the visual representation onto the sand.
+    </p>
+    <p>
+      This loop repeats continuously, ensuring real-time updates as users manipulate the sand.
+    </p>
+    <br/>
+
+    <h4>Projection Mapping and Calibration</h4>
+    <p>
+      Projection alignment was a key part of the design process. 
+      Our sandbox has a square shape, while the camera feed and image output are rectangular (640x480).
+      We manually adjusted the height and angle of the projector to ensure that the projected image correctly covered the sandbox area without distortion.
+      The depth range was also calibrated to match the typical height variations achievable within the sandbox.
+    </p>
+    <br/>
+
+    <h4>Real-Time Optimization</h4>
+    <p>
+      Given the limited computational resources of the Raspberry Pi, we prioritized efficiency:
+    </p>
+    <p>
+      All computationally intensive tasks, especially per-frame depth processing and color mapping, were implemented in C.
+    </p>
+    <p>
+      Python was used only where performance was not critical (GPIO control).
+    </p>
+    <br/>
+
+    <h4>Challenges and Solutions</h4>
+    <p>
+      Performance Bottlenecks: ADD SOMETHING HERE
+    </p>
+    <p>
+      Projection Alignment: 
+      Matching the projected image to the sandbox required trial-and-error calibration and physical adjustments to the projector.
+    </p>
+    <p>
+      GPIO Responsiveness: 
+      Handling button presses with Python's GPIO library worked reliably after implementing proper debounce logic and ensuring the subprocess management was clean.
+    </p>
+  </section>
+
+  <section id="Drawings">
+    <h2>Drawings</h2>
     <p>
       #Todo
     </p>
   </section>
 
-  <!-- Handles Section -->
-  <section id="handles">
-    <h2>Find Me Online</h2>
-    <div class="handles-logos">
-      <a href="https://github.com/GeorgeM58" target="_blank">
-        <img src="index/github.jpg" alt="GitHub" />
-      </a>
-      <a href="https://www.linkedin.com/in/george-maidhof/" target="_blank">
-        <img src="index/linkedin.png" alt="LinkedIn" />
-      </a>
-      <a href="https://www.strava.com/athletes/57573053" target="_blank">
-        <img src="index/strava.png" alt="Strava" />
-      </a>
-      <a href="mailto:gpm58@gmail.com" target="_blank">
-        <img src="index/gmail.png" alt="Gmail" />
-      </a>
-    </div>
+  <section id="Testing">
+    <h2>Testing</h2>
+    <p>
+      #Todo
+    </p>
+  </section>
+
+  <section id="Result">
+    <h2>Result</h2>
+    <p>
+      #Todo
+    </p>
   </section>
 
   <!-- Scroll Effects Script -->
