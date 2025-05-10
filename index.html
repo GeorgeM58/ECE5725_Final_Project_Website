@@ -273,12 +273,13 @@
   <section id="Project Objective">
     <h2>Project Objective</h2>
     <p>
-      The goal of this project was to design and build an engaging, interactive sandbox using real-time depth sensing and projection.
+      The goal of this project was to design and build an engaging, interactive sandbox using real-time depth sensing
+      and projection.
       Inspired by our childhood experiences, we developed a system that
       encourages user interaction by allowing changes in the sand's shape to be reflected in a dynamic, color-mapped
       projection.
       This project serves as a creative application of concepts learned in class—particularly GPIO control and real-time
-      data processing with the Raspberry Pi, while also offering a fun demonstration of how physical changes can be 
+      data processing with the Raspberry Pi, while also offering a fun demonstration of how physical changes can be
       reflected as inputs and can drive real time changes in a digital
       output in an intuitive and entertaining way.
     </p>
@@ -318,7 +319,8 @@
       aligned vertically to ensure proper projection coverage and minimize distortion.
     </p>
     <p>
-      GPIO Controls: GPIO buttons exposed by the TFT are accessable by the Raspberry Pi. The GPIO pins are used for starting and 
+      GPIO Controls: GPIO buttons exposed by the TFT are accessable by the Raspberry Pi. The GPIO pins are used for
+      starting and
       stopping the system. These allow the user to initiate or terminate the program without using a keyboard or SSH
       interface.
     </p>
@@ -330,8 +332,9 @@
     </p>
     <p>
       C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was
-      made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the libfreenect
-      library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This allowed for 
+      made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the
+      libfreenect
+      library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This allowed for
       the real time performance that is seen in our demo.
     </p>
     <p>
@@ -369,7 +372,8 @@
     <p>
       Projection alignment was a key part of the design process.
       Our sandbox has a square shape, while the camera feed and image output are rectangular.
-      When booting from the Pi, we had to manually adjust the height and angle of the projector to ensure that the projected image correctly covered
+      When booting from the Pi, we had to manually adjust the height and angle of the projector to ensure that the
+      projected image correctly covered
       the sandbox area.
       However, when running it from our computers, we could provide a digital offset to ensure accurate rendering.
       The depth range was also calibrated to match the typical height variations achievable within the sandbox.
@@ -391,9 +395,10 @@
 
     <h4>Challenges and Solutions</h4>
     <p>
-      Performance Bottlenecks: To enable real time performance, we both utilized the libfreenect library to use all 4 of the 
+      Performance Bottlenecks: To enable real time performance, we both utilized the libfreenect library to use all 4 of
+      the
       Raspberry Pi's cores. In addition, we found that the Lab 4 kernel removed certain functionalities
-      that were necessary for high performance. As a result, the Lab 3 kernel had files that 
+      that were necessary for high performance. As a result, the Lab 3 kernel had files that
       enhanced our performance.
     </p>
     <p>
@@ -420,25 +425,25 @@
     <h2>Result</h2>
     <h4>System Performance and Accuracy</h4>
     <p>
-      We were able to implement real-time depth mapping given that the Kinect 
-      sensor captured the depth data and the libfreenect library enabled 
+      We were able to implement real-time depth mapping given that the Kinect
+      sensor captured the depth data and the libfreenect library enabled
       the system to generate accurate topographic maps in real-time.
       In addition, our use of C for all time critical components of
       the program enabled its high performance. Lastly,
-      implementing an offset on the computer allowed for accurate 
-      projection alignment. However, when booting from the Pi we 
+      implementing an offset on the computer allowed for accurate
+      projection alignment. However, when booting from the Pi we
       had to make manual adjustments to try to improve its accuracy.
     </p>
     <h4>User Interaction and Engagement</h4>
     <p>
-      Users were able to engage with our project by actively shaping the 
+      Users were able to engage with our project by actively shaping the
       sand in the sandbox to create various topographic features.
-      They were able to observe immediate changes in the projected map 
+      They were able to observe immediate changes in the projected map
       that reflected the changes that they had created in the sand.
     </p>
     <h4>Challenges Encountered</h4>
     <p>
-      We faced several difficult challenges. Primarily amongst it was 
+      We faced several difficult challenges. Primarily amongst it was
       determining how to interface with the XBox 360 Kinect. In addition,
       how to process the data at real-time speeds was another challenge.
       Lastly, attempting to calibrate the projector as well as building
@@ -447,9 +452,21 @@
     <h4>Summary</h4>
     <p>
       Overall, you can see the results of our project shared below
-      with an image of us together next to the sandbox as well as a 
+      with an image of us together next to the sandbox as well as a
       video of us testing it out.
     </p>
+
+    <div
+      style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 20px;">
+      <img src="photos/IMG_4871.jpeg" alt="Team with Sandbox"
+        style="width: 45%; max-width: 400px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+
+      <video controls
+        style="width: 45%; max-width: 400px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+        <source src="photos/IMG_4872.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
   </section>
 
   <section id="Budget">
