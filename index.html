@@ -238,8 +238,8 @@
   <section id="Introduction">
     <h2>Introduction</h2>
     <p>
-      In this project, we created an interactive augmented reality sandbox that visualizes real-time topographical data
-      using a Microsoft Xbox 360 Kinect and a Raspberry Pi.
+      In this project, we created an interactive topographic sandbox that visualizes real-time topographical data
+      using a Microsoft Xbox 360 Kinect, a Raspberry Pi, and a Projector.
       The Kinect captures a continuous stream of depth information, generating 480x640 arrays of Z-values that represent
       the height of the sand surface.
       These depth values are processed in real time and mapped to a dynamic color gradient, simulating elevation-based
@@ -254,14 +254,14 @@
   <section id="Project Objective">
     <h2>Project Objective</h2>
     <p>
-      The goal of this project was to design and build an engaging, interactive sandbox that transforms physical play
-      into a digital experience using real-time depth sensing and projection.
-      Inspired by our childhood experiences and a desire to explore camera-based technology, we developed a system that
+      The goal of this project was to design and build an engaging, interactive sandbox using real-time depth sensing and projection.
+      Inspired by our childhood experiences, we developed a system that
       encourages user interaction by allowing changes in the sand's shape to be reflected in a dynamic, color-mapped
       projection.
       This project serves as a creative application of concepts learned in class—particularly GPIO control and real-time
-      data processing with the Raspberry Pi, while also offering a fun demonstration of how physical input can drive
-      digital output in an intuitive and entertaining way.
+      data processing with the Raspberry Pi, while also offering a fun demonstration of how physical changes can be 
+      reflected as inputs and can drive real time changes in a digital
+      output in an intuitive and entertaining way.
     </p>
   </section>
 
@@ -280,7 +280,7 @@
     <h4>System Architecture Overview</h4>
     <p>
       The core components include the Kinect 1414 depth sensor, a Raspberry Pi 4, a vertically-mounted projector, and
-      physical GPIO buttons for control.
+      physical GPIO buttons on a TFT for control.
       The Kinect captures a live 480x640 stream of depth data which is sent to the Raspberry Pi via USB.
       The Raspberry Pi processes this depth data and generates a colorized image representing terrain elevation, which
       is then projected directly onto the sandbox.
@@ -299,7 +299,7 @@
       aligned vertically to ensure proper projection coverage and minimize distortion.
     </p>
     <p>
-      GPIO Controls: Two physical buttons are wired to the Raspberry Pi’s GPIO pins—one for starting and one for
+      GPIO Controls: GPIO buttons exposed by the TFT are accessable by the Raspberry Pi. The GPIO pins are used for starting and 
       stopping the system. These allow the user to initiate or terminate the program without using a keyboard or SSH
       interface.
     </p>
@@ -311,7 +311,9 @@
     </p>
     <p>
       C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was
-      made to improve real-time responsiveness given the Raspberry Pi’s limited processing power.
+      made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the libfreenect
+      library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This allowed for 
+      the real time performance that is seen in our demo.
     </p>
     <p>
       Python Script: Manages GPIO input and user interaction. A Python loop listens for GPIO button presses and controls
@@ -334,7 +336,7 @@
     </p>
     <p>
       4) Based on this depth, a color (RGB) value is calculated using a scalar mapping technique and if a depth value
-      falls outside the expected range, it is rendered in red to signal an anomaly or invalid input.
+      falls outside the expected range, it is rendered in black.
     </p>
     <p>
       5) The final color-mapped image is sent to the projector, which overlays the visual representation onto the sand.
@@ -347,9 +349,10 @@
     <h4>Projection Mapping and Calibration</h4>
     <p>
       Projection alignment was a key part of the design process.
-      Our sandbox has a square shape, while the camera feed and image output are rectangular (640x480).
-      We manually adjusted the height and angle of the projector to ensure that the projected image correctly covered
-      the sandbox area without distortion.
+      Our sandbox has a square shape, while the camera feed and image output are rectangular.
+      When booting from the Pi, we had to manually adjust the height and angle of the projector to ensure that the projected image correctly covered
+      the sandbox area.
+      However, when running it from our computers, we could provide a digital offset to ensure accurate rendering.
       The depth range was also calibrated to match the typical height variations achievable within the sandbox.
     </p>
     <br />
@@ -369,16 +372,20 @@
 
     <h4>Challenges and Solutions</h4>
     <p>
-      Performance Bottlenecks: ADD SOMETHING HERE
+      Performance Bottlenecks: To enable real time performance, we both utilized the libfreenect library to use all 4 of the 
+      Raspberry Pi's cores. In addition, we found that the Lab 4 kernel removed certain functionalities
+      that were necessary for high performance. As a result, the Lab 3 kernel had files that 
+      enhanced our performance.
     </p>
     <p>
       Projection Alignment:
-      Matching the projected image to the sandbox required trial-and-error calibration and physical adjustments to the
-      projector.
+      On the computer, we could just set an offset to accurately map onto the sandbox. However, when booting from
+      the Raspberry Pi, we had to make physical adjustments to the
+      projector in order to try to align our projection to the sand without having an offset.
     </p>
     <p>
       GPIO Responsiveness:
-      Handling button presses with Python's GPIO library worked reliably after implementing proper debounce logic and
+      Handling button presses with Python's GPIO library worked reliably after implementing and
       ensuring the subprocess management was clean.
     </p>
   </section>
@@ -399,8 +406,37 @@
 
   <section id="Result">
     <h2>Result</h2>
+    <h4>System Performance and Accuracy</h4>
     <p>
-      #Todo
+      We were able to implement real-time depth mapping given that the Kinect 
+      sensor captured the depth data and the libfreenect library enabled 
+      the system to generate accurate topographic maps in real-time.
+      In addition, our use of C for all time critical components of
+      the program enabled its high performance. Lastly,
+      implementing an offset on the computer allowed for accurate 
+      projection alignment. However, when booting from the Pi we 
+      had to make manual adjustments to try to improve its accuracy.
+    </p>
+    <h4>User Interaction and Engagement</h4>
+    <p>
+      Users were able to engage with our project by actively shaping the 
+      sand in the sandbox to create various topographic features.
+      They were able to observe immediate changes in the projected map 
+      that reflected the changes that they had created in the sand.
+    </p>
+    <h4>Challenges Encountered</h4>
+    <p>
+      We faced several difficult challenges. Primarily amongst it was 
+      determining how to interface with the XBox 360 Kinect. In addition,
+      how to process the data at real-time speeds was another challenge.
+      Lastly, attempting to calibrate the projector as well as building
+      the physical sandbox were additional challenges we had to overcome.
+    </p>
+    <h4>Summary</h4>
+    <p>
+      Overall, you can see the results of our project shared below
+      with an image of us together next to the sandbox as well as a 
+      video of us testing it out.
     </p>
   </section>
 
