@@ -23,7 +23,7 @@
     nav {
       position: sticky;
       top: 0;
-      background: linear-gradient(135deg, #5fbf77, #2c7a4d);
+      background: linear-gradient(135deg, #ff9999, #ff4d4d);
       padding: 1rem 2rem;
       display: flex;
       justify-content: center;
@@ -86,7 +86,6 @@
       overflow: hidden;
       white-space: nowrap;
       border-right: 3px solid white;
-      animation: typing 3s steps(30, end), blink 0.8s step-end infinite;
       max-width: 90%;
     }
 
@@ -227,13 +226,33 @@
   <!-- Hero / Home Section -->
   <header id="home">
     <h1>Topographic Sandbox</h1>
-    <p>A Smart Sandbox Experience</p>
-    <div class="scroll-down" onclick="document.getElementById('Introduction').scrollIntoView({ behavior: 'smooth' });">
-      ↓ Being Experience
+    <div style="height: 20px;"></div>
+    <h2>By: George Maidhof (gpm58) and Giorgi Berndt (gb449) </h2>
+    <h2>Date: May 10th 2025</h2>
+    <div class="scroll-down" onclick="document.getElementById('video').scrollIntoView({ behavior: 'smooth' });">
+      ↓ Project Information
     </div>
   </header>
 
-  <!-- About Me Section -->
+
+  <section id="video" style="padding: 60px 20px; text-align: center;">
+    <h2 style="font-size: 2rem; margin-bottom: 20px;">Demo Video</h2>
+    <div style="
+      display: inline-block;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border: 2px solid #e0e0e0;
+      padding: 20px;
+      max-width: 600px;
+      width: 100%;
+    ">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/7OE1gsFn2Js" title="Topographic Sandbox"
+        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen style="border-radius: 12px; width: 100%; height: 315px;"></iframe>
+    </div>
+  </section>
+
 
   <section id="Introduction">
     <h2>Introduction</h2>
@@ -390,13 +409,6 @@
     </p>
   </section>
 
-  <section id="Drawings">
-    <h2>Drawings</h2>
-    <p>
-      #Todo
-    </p>
-  </section>
-
   <section id="Testing">
     <h2>Testing</h2>
     <p>
@@ -437,6 +449,88 @@
       Overall, you can see the results of our project shared below
       with an image of us together next to the sandbox as well as a 
       video of us testing it out.
+    </p>
+  </section>
+
+  <section id="Budget">
+    <h2>Budget</h2>
+    <p>The materials for our project revolved around making use of any unused materials lying around within the ECE
+      Department and the loading doc. In the short section below, we will describe the materials used, their purpose and
+      where they were gotten.
+
+      In ECE 5725, the main device utilized is a Raspberry Pi V4 along with a 16 GB MicroSD card, a 15W USB-C for power,
+      and a resistive PiTFT that mounts on the Raspberry Pi V4 Pins. The rest of the items listed are used for our
+      specific Topographic Map Sandbox project.
+
+      We developed a frame and mount from wood, tape, and screws along with a cardboard bottom to hold the sand. This in
+      total would cost you about $12, however we made us of materials left over from the loading dock, along with some
+      extra materials Professor Skovira had around. We had purchased 100 lbs of play sand from Home Depot but only used
+      40lbs for our project, resulting in about $6.39 worth of sand used. The XBox 360 was purchased off of Ebay with
+      the needed wires (power and USB-3.0) for $10.99. For the last of the materials that made up this project, we used
+      a small table which we had borrowed from Professor Skovira along with a projector Cornell IT was not using.
+
+      With this, our total price was about $115.38 dollars. If we were to exclude all of the provided materials
+      (Raspberry Pi V4, 16 GB MicroSD card, 15W USB-C power supply, resistive PiTFT, table and projector), the total
+      cost of the project would be, about $29.38.
+    </p>
+    <div
+      style="background-color: white; padding: 20px; margin-top: 20px; width: 80%; max-width: 800px; margin: 0 auto; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); text-align: left;">
+      <h3 style="color: #007BFF; margin-bottom: 20px;">Materials</h3>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 10px; text-align: left; background-color: #007BFF; color: white;">
+            Component</th>
+          <th style="border: 1px solid #ddd; padding: 10px; text-align: left; background-color: #007BFF; color: white;">
+            Estimate (USD)</th>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Raspberry Pi V4</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$35</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">16 GB MicroSD Card</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$8</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">15W USB-C Power Supply Cable</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$8</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Resistive Touch PiTFT (320x240) 2.8"</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$35</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Frame (Wood + Tape + Cardboard) + Screws</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$12</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Sand (40 lbs)</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$6.39</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Xbox 360 Kinect Model 1414</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$10.99</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Table (Borrowed)</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$0</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;">Projector (From IT)</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$0</td>
+        </tr>
+        <tr style="font-weight: bold; background-color: #e0e0e0;">
+          <td style="border: 1px solid #ddd; padding: 10px;">Total Cost Estimate</td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$115.38</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="References">
+    <h2>References</h2>
+    <p>
+      #Todo
     </p>
   </section>
 
