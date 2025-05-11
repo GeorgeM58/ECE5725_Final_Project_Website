@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Personal Website</title>
+  <title>Topographic Sandbox</title>
   <style>
     * {
       margin: 0;
@@ -234,6 +234,21 @@
     </div>
   </header>
 
+  <section id="Project Objective">
+    <h2>Project Objective</h2>
+    <p>
+      The goal of this project was to design and build an engaging, interactive sandbox using real-time depth sensing
+      and projection.
+      Inspired by our childhood experiences, we developed a system that
+      encourages user interaction by allowing changes in the sand's shape to be reflected in a dynamic, color-mapped
+      projection.
+      This project serves as a creative application of concepts learned in class, particularly GPIO control and real-time
+      data processing with the Raspberry Pi, while also offering a fun demonstration of how physical changes can be
+      reflected as inputs and can drive real time changes in a digital
+      output in an intuitive and entertaining way.
+    </p>
+  </section>
+
 
   <section id="video" style="padding: 60px 20px; text-align: center;">
     <h2 style="font-size: 2rem; margin-bottom: 20px;">Demo Video</h2>
@@ -267,21 +282,6 @@
       that updates as the sand is moved.
       We also integrated GPIO-controlled buttons on the Raspberry Pi to easily start and stop the system, providing a
       smooth and interactive user experience.
-    </p>
-  </section>
-
-  <section id="Project Objective">
-    <h2>Project Objective</h2>
-    <p>
-      The goal of this project was to design and build an engaging, interactive sandbox using real-time depth sensing
-      and projection.
-      Inspired by our childhood experiences, we developed a system that
-      encourages user interaction by allowing changes in the sand's shape to be reflected in a dynamic, color-mapped
-      projection.
-      This project serves as a creative application of concepts learned in class—particularly GPIO control and real-time
-      data processing with the Raspberry Pi, while also offering a fun demonstration of how physical changes can be
-      reflected as inputs and can drive real time changes in a digital
-      output in an intuitive and entertaining way.
     </p>
   </section>
 
@@ -351,17 +351,44 @@
       1) The Kinect begins streaming depth data.
     </p>
     <p>
-      2) The C program uses the freenect_set_depth_callback function to access 480x640 frames of raw depth values.
+      2) The Kinect device context freenect_context is initialized and
+      it opens freenect_device. 
+    </p>
+    <div
+      style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 20px;">
+      <img src="photos/photo3.png" alt="Team with Sandbox"
+        style="width: 45%; max-width: 400px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+    </div>
+    <p>
+      3) The SDL2 window, renderer, and texture are initialized for displaying
+      the depth data. The function init_sdl will create a window 
+      called "Kinect Depth Viewer" with dimensions 1480x1080. Then it 
+      will create a renderer and a texture for rendering depth data 
+      using RGB24 pixel format of dimensions 480x640.
+    </p>
+    <div
+      style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 20px;">
+      <img src="photos/photo1.png" alt="Team with Sandbox"
+        style="width: 45%; max-width: 400px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+    </div>
+    <p>
+      4) Next we used the depth callback function using freenect_set_depth_callback
+      to call depth_cb. This receives the depth data from the Kinect device and 
+      processes each pixel.
     </p>
     <p>
-      3) Each depth value is compared against predefined minimum and maximum thresholds.
+      5) Each depth value is checked to be within the range 1100 to 1700 and 
+      then is normalized. This normalized value is mapped to RGB colors
+      and assigns those RGB values to the corresponding pixel in the texture.
+      If the value is out of range then the color is assigned to be grey.
     </p>
+    <div
+      style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 20px;">
+      <img src="photos/photo2.png" alt="Team with Sandbox"
+        style="width: 45%; max-width: 400px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+    </div>
     <p>
-      4) Based on this depth, a color (RGB) value is calculated using a scalar mapping technique and if a depth value
-      falls outside the expected range, it is rendered in black.
-    </p>
-    <p>
-      5) The final color-mapped image is sent to the projector, which overlays the visual representation onto the sand.
+      6) The final color-mapped image is sent to the projector, which overlays the visual representation onto the sand.
     </p>
     <p>
       This loop repeats continuously, ensuring real-time updates as users manipulate the sand.
@@ -417,7 +444,20 @@
   <section id="Testing">
     <h2>Testing</h2>
     <p>
-      #Todo
+      For our testing, we broke down the project into several components.
+      First, we had to get the depth sensors working. For that we tested out 
+      several libraries and then tried doing basic rendering of the scene by 
+      setting a threshold value and setting all values below that value to red 
+      and all values above it to blue. After confirming and getting that working 
+      we then moved on to calibrating the projector from the computer. 
+      This was done to make sure we could properly align the colors with 
+      the map and make sure that the depth sensor and projector could be aligned together.
+      Next, we then debugged implementing real time functionality.
+      The libfreenect library allowed us to use all four cores on the Pi 
+      and interestingly, using the kernel from Lab 3 as opposed to Lab 4 
+      also sped up performance significantly. Lastly, we then just implemented 
+      GPIO button functionality so that we could use the Pi to initialize and 
+      terminate the project.
     </p>
   </section>
 
@@ -548,6 +588,17 @@
     <h2>References</h2>
     <p>
       #Todo
+    </p>
+  </section>
+
+  <section id="References">
+    <h2>Contributions</h2>
+    <p>
+      Given that George Maidhof is an ECE Major and Giorgi Berndt is a CS Major,
+      George spearheaded the work on the hardware side while Giorgi focused on 
+      the software side. Given Giorgi was traveling some of the last week prior to the 
+      competition, George ended up spending more time in the lab
+      so Giorgi made up for it by authoring most of the work on the website.
     </p>
   </section>
 
