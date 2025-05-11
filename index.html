@@ -652,7 +652,8 @@
       <li>
         <span style="font-weight: bold; text-decoration: underline;">Using Cython for Bindings and Wrappers</span>:
         Upon installed and building libfreenect, you will need to install Cython for the bindings and wrappers in order
-        to utilize the libfreenect in your code. Perform the following:
+        to utilize the libfreenect in your code. Perform the following and then if done correclty, your enviorment
+        should work as intended:
         <pre
           style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); overflow-x: auto; margin-top: 8px;">
         <code>
@@ -662,7 +663,6 @@
         </code>
         </pre>
         <br>
-        From there, your library should be properly installed and working as intended.
       </li>
       <br>
     </ol>
@@ -933,9 +933,11 @@
       [3] “SDL library in C/C++ with examples,” GeeksforGeeks. Accessed: May 10, 2025. [Online]. Available:
       https://www.geeksforgeeks.org/sdl-library-in-c-c-with-examples/
       <br />
-      [4] J. Skovira, “ECE 5725 Lab 1,” 2025. Lab 1_Spring2025_v2.pdf. Accessed: May 10, 2025. [Online].
+      [4] “SDL2/SDL_Color.” Accessed: May 11, 2025. [Online]. Available: https://wiki.libsdl.org/SDL2/SDL_Color
       <br />
-      [5] J. Skovira, “ECE 5725 Lab 3,” 2025. Lab 3_Spring2025_v2.pdf. Accessed: May 10, 2025. [Online].
+      [5] J. Skovira, “ECE 5725 Lab 1,” 2025. Lab 1_Spring2025_v2.pdf. Accessed: May 10, 2025. [Online].
+      <br />
+      [6] J. Skovira, “ECE 5725 Lab 3,” 2025. Lab 3_Spring2025_v2.pdf. Accessed: May 10, 2025. [Online].
     </p>
   </section>
 
@@ -957,12 +959,211 @@
       style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
       <summary
         style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
-        View Code Block
+        C Code:
       </summary>
       <pre
         style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
   <code style="color: #333;">
- 
+    #include <stdio.h>
+      #include <stdlib.h>
+      #include <libfreenect.h>
+      #include <unistd.h>
+      #include <libusb-1.0/libusb.h>
+      #include <SDL2/SDL.h>
+      #include <math.h>
+      
+      #define WIDTH  640
+      #define HEIGHT 480
+      
+      freenect_context *f_ctx;
+      freenect_device *f_dev;
+      
+      SDL_Window *window = NULL;
+      SDL_Renderer *renderer = NULL;
+      SDL_Texture *texture = NULL;
+      
+      int init_sdl() {
+          if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+              fprintf(stderr, "SDL Init Not Working: %s\n", SDL_GetError());
+              return -1;
+          }
+          
+          window = SDL_CreateWindow("Kinect Depth Viewer", 500, SDL_WINDOWPOS_UNDEFINED, 1480, 1080, 0);
+          renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+          texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
+        
+          if (!window || !renderer || !texture) {
+              fprintf(stderr, "SDL Not Working\n");
+              return -1;
+          }
+        
+          return 0;
+      }
+      
+      void cleanup_sdl() {
+          SDL_DestroyTexture(texture);
+          SDL_DestroyRenderer(renderer);
+          SDL_DestroyWindow(window);
+          SDL_Quit();
+      }
+      
+      void depth_cb(freenect_device *dev, void *depth, uint32_t timestamp){
+          uint16_t *d = (uint16_t*)depth;
+          unsigned char rgb[WIDTH * HEIGHT * 3];
+      
+          for (int y = 0; y < HEIGHT; ++y) {
+              for (int x = 0; x < WIDTH; ++x) {
+                  uint16_t v = d[y * WIDTH + x];
+                  int index = (y * WIDTH + x) * 3;
+      
+                  if (v >= 1100 && v <= 1700) {
+                      float norm = 1.0f - (float)(v - 1300) / 100.0f; 
+                      float r = fminf(fmaxf(1.5f - fabsf(4.0f * norm - 3.0f), 0.0f), 1.0f);
+                      float g = fminf(fmaxf(1.5f - fabsf(4.0f * norm - 2.0f), 0.0f), 1.0f);
+                      float b = fminf(fmaxf(1.5f - fabsf(4.0f * norm - 1.0f), 0.0f), 1.0f);
+      
+                      rgb[index + 0] = (uint8_t)(r * 255);
+                      rgb[index + 1] = (uint8_t)(g * 255);
+                      rgb[index + 2] = (uint8_t)(b * 255);
+                  } else {
+                      rgb[index + 0] = 64;
+                      rgb[index + 1] = 0;
+                      rgb[index + 2] = 0;
+                  }
+              }
+          }
+      
+          SDL_UpdateTexture(texture, NULL, rgb, WIDTH * 3);
+          SDL_RenderClear(renderer);
+      
+          SDL_Rect src_rect = {160, 120, 320, 240};
+      
+          SDL_Rect dst_rect = {0, 0, 1480, 1080};
+      
+          SDL_RenderCopyEx(renderer, texture, &src_rect, &dst_rect, 0, NULL, SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL);
+          SDL_RenderPresent(renderer);
+      }
+      
+      int main(){
+          if (freenect_init(&f_ctx, NULL) &lt; 0) {
+              printf("Freenect_Init Not Working\n");
+              return -1;
+          }
+          
+          if (freenect_open_device(f_ctx, &f_dev, 0) &lt; 0) {
+              printf("Freenect Open Device Not Working\n");
+              return -1;
+          }
+          
+          if (init_sdl() &lt; 0) {
+              return -1;
+          }
+      
+          freenect_set_depth_mode(f_dev, freenect_find_depth_mode(FREENECT_RESOLUTION_MEDIUM, FREENECT_DEPTH_MM));
+          freenect_set_depth_callback(f_dev, depth_cb);
+          freenect_start_depth(f_dev);
+      
+          while (1) {
+              SDL_Event e;
+              while (SDL_PollEvent(&e)) {
+                  if (e.type == SDL_QUIT) goto quit;
+              }
+      
+              if (freenect_process_events(f_ctx) < 0) {
+                  fprintf(stderr, "Error processing events\n");
+                  break;
+              }
+          }
+      
+      quit:
+          freenect_stop_depth(f_dev);
+          freenect_close_device(f_dev);
+          freenect_shutdown(f_ctx);
+          cleanup_sdl();
+          return 0;
+      }      
+  </code>
+    </pre>
+    </details>
+    <br>
+    <details
+      style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
+      <summary
+        style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
+        Python Code:
+      </summary>
+      <pre
+        style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
+  <code style="color: #333;">
+    import RPi.GPIO as GPIO
+import time
+import subprocess
+import os
+import signal
+import sys
+
+GPIO.setmode(GPIO.BCM)
+
+START_BUTTON = 17
+QUIT_BUTTON = 22
+QUIT_PYTHON = 27
+
+GPIO.setup(START_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(QUIT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(QUIT_PYTHON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+
+kinect_process = None
+
+try:
+    while True:
+        if GPIO.input(START_BUTTON) == GPIO.LOW:
+            if kinect_process is None or kinect_process.poll() is not None:
+                print("Starting Kinect")
+                kinect_process = subprocess.Popen(["/home/pi/Final_Project/kinect_depth"])
+                time.sleep(0.5)  
+
+        if GPIO.input(QUIT_BUTTON) == GPIO.LOW:
+            if kinect_process is not None and kinect_process.poll() is None:
+                print("Stopping Kinect")
+                kinect_process.send_signal(signal.SIGINT)
+                kinect_process.wait()
+                kinect_process = None
+                time.sleep(0.5)
+                
+        if GPIO.input(QUIT_PYTHON) == GPIO.LOW:
+            if True:
+                print("Quitting Python Script")
+                GPIO.cleanup()
+                sys.exit()
+                time.sleep(0.5)
+         
+
+        time.sleep(0.1)
+
+except KeyboardInterrupt:
+	print("\nExiting program")
+
+finally:
+    if kinect_process is not None and kinect_process.poll() is None:
+        kinect_process.terminate()
+    GPIO.cleanup()
+  </code>
+    </pre>
+    </details>
+    <br>
+    <details
+      style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
+      <summary
+        style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
+        Bash Script:
+      </summary>
+      <pre
+        style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
+  <code style="color: #333;">
+    #!/bin/bash
+
+    sudo python /home/pi/Final_Project/gpio_control.py
   </code>
     </pre>
     </details>
