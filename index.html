@@ -352,48 +352,54 @@
       stopping the system. These allow the user to initiate or terminate the program without using a keyboard and mouse
       or SSH interface.
     </p>
-    <br />
+    Refer to the flow diagram below for a visual representation of the system hardware architecture:
+    <div style="text-align: center; margin-top: 20px;">
+      <img src="photos/flow_diagram.png" alt="System Architecture Diagram"
+        style="width: 80%; max-width: 800px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+      <br />
 
-    <h4>Software Architecture</h4>
-    <p>
-      The system software is implemented using a combination of C and Python, leveraging the strengths of each language:
-    </p>
-    <br>
-    <p>
-      C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was
-      made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the
-      libfreenect
-      library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This allowed for
-      the real time performance that is seen in our demo.
-    </p>
-    <br>
-    <p>
-      Python Script: Manages GPIO input and user interaction. A Python loop listens for GPIO button presses and controls
-      the lifecycle of the C-based visualization subprocess.
-    </p>
-    <br />
+      <h4>Software Architecture</h4>
+      <p>
+        The system software is implemented using a combination of C and Python, leveraging the strengths of each
+        language:
+      </p>
+      <br>
+      <p>
+        C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was
+        made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the
+        libfreenect
+        library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This allowed for
+        the real time performance that is seen in our demo.
+      </p>
+      <br>
+      <p>
+        Python Script: Manages GPIO input and user interaction. A Python loop listens for GPIO button presses and
+        controls
+        the lifecycle of the C-based visualization subprocess.
+      </p>
+      <br />
 
-    <h4>Data Processing Pipeline</h4>
-    <p>
-      Once the system is initialized via the start button:
-    </p>
-    <p>
-      1) The Kinect begins streaming depth data.
-    </p>
-    <br>
-    <p>
-      2) The Kinect device context <code>freenect_context</code> is initialized and it opens
-      <code>freenect_device</code>.
-    </p>
+      <h4>Data Processing Pipeline</h4>
+      <p>
+        Once the system is initialized via the start button:
+      </p>
+      <p>
+        1) The Kinect begins streaming depth data.
+      </p>
+      <br>
+      <p>
+        2) The Kinect device context <code>freenect_context</code> is initialized and it opens
+        <code>freenect_device</code>.
+      </p>
 
-    <details
-      style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
-      <summary
-        style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
-        View Code Block
-      </summary>
-      <pre
-        style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
+      <details
+        style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
+        <summary
+          style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
+          View Code Block
+        </summary>
+        <pre
+          style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
     <code style="color: #333;">
     if (freenect_init(&f_ctx, NULL) &lt; 0) {
         printf("Freenect_Init Not Working\n");
@@ -410,23 +416,23 @@
     }
     </code>
       </pre>
-    </details>
-    <br>
-    <p>
-      3) The SDL2 window, renderer, and texture are initialized for displaying
-      the depth data. The function init_sdl will create a window
-      called "Kinect Depth Viewer" with dimensions 1480x1080. Then it
-      will create a renderer and a texture for rendering depth data
-      using RGB24 pixel format of dimensions 480x640.
-    </p>
-    <details
-      style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
-      <summary
-        style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
-        View Code Block
-      </summary>
-      <pre
-        style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
+      </details>
+      <br>
+      <p>
+        3) The SDL2 window, renderer, and texture are initialized for displaying
+        the depth data. The function init_sdl will create a window
+        called "Kinect Depth Viewer" with dimensions 1480x1080. Then it
+        will create a renderer and a texture for rendering depth data
+        using RGB24 pixel format of dimensions 480x640.
+      </p>
+      <details
+        style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
+        <summary
+          style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
+          View Code Block
+        </summary>
+        <pre
+          style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
   <code style="color: #333;">
     int init_sdl() {
       if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -447,29 +453,30 @@
   }
   </code>
     </pre>
-    </details>
-    <br>
-    <p>
-      4) Next we used the depth callback function using freenect_set_depth_callback
-      to call depth_cb. This receives the depth data from the Kinect device and
-      processes each pixel.
-    </p>
-    <br>
-    <p>
-      5) Each depth value is checked to be within the range 1100 to 1700 and
-      then is normalized. This normalized value is mapped to RGB colors
-      and assigns those RGB values to the corresponding pixel in the texture.
-      If the value is out of range then the color is assigned to be grey. Based on the orientation of the projector and
-      kinect, we had to flip the image 180 degrees as well.
-    </p>
-    <details
-      style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
-      <summary
-        style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
-        View Code Block
-      </summary>
-      <pre
-        style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
+      </details>
+      <br>
+      <p>
+        4) Next we used the depth callback function using freenect_set_depth_callback
+        to call depth_cb. This receives the depth data from the Kinect device and
+        processes each pixel.
+      </p>
+      <br>
+      <p>
+        5) Each depth value is checked to be within the range 1100 to 1700 and
+        then is normalized. This normalized value is mapped to RGB colors
+        and assigns those RGB values to the corresponding pixel in the texture.
+        If the value is out of range then the color is assigned to be grey. Based on the orientation of the projector
+        and
+        kinect, we had to flip the image 180 degrees as well.
+      </p>
+      <details
+        style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
+        <summary
+          style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
+          View Code Block
+        </summary>
+        <pre
+          style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
   <code style="color: #333;">
     void depth_cb(freenect_device *dev, void *depth, uint32_t timestamp){
       uint16_t *d = (uint16_t*)depth;
@@ -509,80 +516,84 @@
   }
   </code>
     </pre>
-    </details>
-    <br>
-    <p>
-      6) The final color-mapped image is sent to the projector, which overlays the visual representation onto the sand.
-    </p>
-    <br>
-    <p>
-      This loop repeats continuously, ensuring real-time updates as users manipulate the sand.
-    </p>
-    <br />
+      </details>
+      <br>
+      <p>
+        6) The final color-mapped image is sent to the projector, which overlays the visual representation onto the
+        sand.
+      </p>
+      <br>
+      <p>
+        This loop repeats continuously, ensuring real-time updates as users manipulate the sand.
+      </p>
+      <br />
 
-    <h4>Projection Mapping and Calibration</h4>
-    <p>
-      Projection alignment was a key part of the design process.
-      Our sandbox has a square shape, while the camera feed and image output are rectangular.
-      When booting from the Pi, we had to manually adjust the height and angle of the projector to ensure that the
-      projected image correctly covered
-      the sandbox area. This could simply be fixed by changing the mount to move a little forward and to the right.
-      However, when running it from our computers, we could provide a digital offset to ensure accurate rendering.
-      The depth range was also calibrated to match the typical height variations achievable within the sandbox.
-    </p>
-    <br />
+      <h4>Projection Mapping and Calibration</h4>
+      <p>
+        Projection alignment was a key part of the design process.
+        Our sandbox has a square shape, while the camera feed and image output are rectangular.
+        When booting from the Pi, we had to manually adjust the height and angle of the projector to ensure that the
+        projected image correctly covered
+        the sandbox area. This could simply be fixed by changing the mount to move a little forward and to the right.
+        However, when running it from our computers, we could provide a digital offset to ensure accurate rendering.
+        The depth range was also calibrated to match the typical height variations achievable within the sandbox.
+      </p>
+      <br />
 
-    <h4>Real-Time Optimization</h4>
-    <p>
-      Given the limited computational resources of the Raspberry Pi, we prioritized efficiency:
-    </p>
-    <br>
-    <p>
-      All computationally intensive tasks, especially per-frame depth processing and color mapping, were implemented
-      in
-      C.
-    </p>
-    <br>
-    <p>
-      Python was used only where performance was not critical (GPIO control).
-    </p>
-    <br />
+      <h4>Real-Time Optimization</h4>
+      <p>
+        Given the limited computational resources of the Raspberry Pi, we prioritized efficiency:
+      </p>
+      <br>
+      <p>
+        All computationally intensive tasks, especially per-frame depth processing and color mapping, were implemented
+        in
+        C.
+      </p>
+      <br>
+      <p>
+        Python was used only where performance was not critical (GPIO control).
+      </p>
+      <br />
 
-    <h4>Challenges and Solutions</h4>
-    <p>
-      Performance Bottlenecks: To enable real time performance, we both utilized the libfreenect library to use all 4
-      of
-      the
-      Raspberry Pi's cores. In addition, we found that the Lab 4 kernel removed certain functionalities
-      that were necessary for high performance. As a result, the Lab 3 kernel had files that
-      enhanced our performance that were previously removed from the Lab 4 kernel.
-    </p>
-    <br>
-    <p>
-      Projection Alignment:
-      On the computer, we could just set an offset to accurately map onto the sandbox. However, when booting from
-      the Raspberry Pi, we had to make physical adjustments to the
-      projector in order to try to align our projection to the sand without having an offset.
-    </p>
-    <br>
-    <p>
-      GPIO Responsiveness:
-      Handling button presses with Python's GPIO library worked reliably after implementing and
-      ensuring the subprocess management was clean. We were originally going to use touchscreen button functionality but
-      it did not originally work with the Lab 4 kernel which is why we had swapped to the Lab 3 kernel. When doing
-      testing for the TFT touchscreen button functionality, we were unable to spawn two windows (one on the TFT and one
-      through the Projector) at the same time which
-      is why we took the GPIO button approach.
-    </p>
-    <br>
-    <p>
-      Boot From Start:
-      We found that we had issues when using Crontab in order to automate our system as everything we had tried, even
-      using direct path names resulted in nothing working. We eventually swapped from using Crontab to using bashrc
-      which
-      worked perfectly. With this though, we had lost some fuctionality where the window would spawn off center but this
-      could be fixed mannually.
-    </p>
+      <h4>Challenges and Solutions</h4>
+      <p>
+        Performance Bottlenecks: To enable real time performance, we both utilized the libfreenect library to use all 4
+        of
+        the
+        Raspberry Pi's cores. In addition, we found that the Lab 4 kernel removed certain functionalities
+        that were necessary for high performance. As a result, the Lab 3 kernel had files that
+        enhanced our performance that were previously removed from the Lab 4 kernel.
+      </p>
+      <br>
+      <p>
+        Projection Alignment:
+        On the computer, we could just set an offset to accurately map onto the sandbox. However, when booting from
+        the Raspberry Pi, we had to make physical adjustments to the
+        projector in order to try to align our projection to the sand without having an offset.
+      </p>
+      <br>
+      <p>
+        GPIO Responsiveness:
+        Handling button presses with Python's GPIO library worked reliably after implementing and
+        ensuring the subprocess management was clean. We were originally going to use touchscreen button functionality
+        but
+        it did not originally work with the Lab 4 kernel which is why we had swapped to the Lab 3 kernel. When doing
+        testing for the TFT touchscreen button functionality, we were unable to spawn two windows (one on the TFT and
+        one
+        through the Projector) at the same time which
+        is why we took the GPIO button approach.
+      </p>
+      <br>
+      <p>
+        Boot From Start:
+        We found that we had issues when using Crontab in order to automate our system as everything we had tried, even
+        using direct path names resulted in nothing working. We eventually swapped from using Crontab to using bashrc
+        which
+        worked perfectly. With this though, we had lost some fuctionality where the window would spawn off center but
+        this
+        could be fixed mannually.
+      </p>
   </section>
 
   <section id="Installation Guide"
