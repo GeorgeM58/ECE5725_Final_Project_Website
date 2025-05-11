@@ -964,13 +964,13 @@
       <pre
         style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
   <code style="color: #333;">
-    #include <stdio.h>
-      #include <stdlib.h>
-      #include <libfreenect.h>
-      #include <unistd.h>
-      #include <libusb-1.0/libusb.h>
-      #include <SDL2/SDL.h>
-      #include <math.h>
+      #include &lt;stdio.h&gt;
+      #include &lt;stdlib.h&gt;
+      #include &lt;libfreenect.h&gt;
+      #include &lt;unistd.h&gt;
+      #include &lt;libusb-1.0/libusb.h&gt;
+      #include &lt;SDL2/SDL.h&gt;
+      #include &lt;math.h&gt;
       
       #define WIDTH  640
       #define HEIGHT 480
@@ -1095,59 +1095,59 @@
       <pre
         style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
   <code style="color: #333;">
-    import RPi.GPIO as GPIO
-import time
-import subprocess
-import os
-import signal
-import sys
+      import RPi.GPIO as GPIO
+      import time
+      import subprocess
+      import os
+      import signal
+      import sys
 
-GPIO.setmode(GPIO.BCM)
+      GPIO.setmode(GPIO.BCM)
 
-START_BUTTON = 17
-QUIT_BUTTON = 22
-QUIT_PYTHON = 27
+      START_BUTTON = 17
+      QUIT_BUTTON = 22
+      QUIT_PYTHON = 27
 
-GPIO.setup(START_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(QUIT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(QUIT_PYTHON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+      GPIO.setup(START_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+      GPIO.setup(QUIT_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+      GPIO.setup(QUIT_PYTHON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
-kinect_process = None
+      kinect_process = None
 
-try:
-    while True:
-        if GPIO.input(START_BUTTON) == GPIO.LOW:
-            if kinect_process is None or kinect_process.poll() is not None:
-                print("Starting Kinect")
-                kinect_process = subprocess.Popen(["/home/pi/Final_Project/kinect_depth"])
-                time.sleep(0.5)  
+      try:
+          while True:
+              if GPIO.input(START_BUTTON) == GPIO.LOW:
+                  if kinect_process is None or kinect_process.poll() is not None:
+                      print("Starting Kinect")
+                      kinect_process = subprocess.Popen(["/home/pi/Final_Project/kinect_depth"])
+                      time.sleep(0.5)  
 
-        if GPIO.input(QUIT_BUTTON) == GPIO.LOW:
-            if kinect_process is not None and kinect_process.poll() is None:
-                print("Stopping Kinect")
-                kinect_process.send_signal(signal.SIGINT)
-                kinect_process.wait()
-                kinect_process = None
-                time.sleep(0.5)
-                
-        if GPIO.input(QUIT_PYTHON) == GPIO.LOW:
-            if True:
-                print("Quitting Python Script")
-                GPIO.cleanup()
-                sys.exit()
-                time.sleep(0.5)
-         
+              if GPIO.input(QUIT_BUTTON) == GPIO.LOW:
+                  if kinect_process is not None and kinect_process.poll() is None:
+                      print("Stopping Kinect")
+                      kinect_process.send_signal(signal.SIGINT)
+                      kinect_process.wait()
+                      kinect_process = None
+                      time.sleep(0.5)
+                      
+              if GPIO.input(QUIT_PYTHON) == GPIO.LOW:
+                  if True:
+                      print("Quitting Python Script")
+                      GPIO.cleanup()
+                      sys.exit()
+                      time.sleep(0.5)
+              
 
-        time.sleep(0.1)
+              time.sleep(0.1)
 
-except KeyboardInterrupt:
-	print("\nExiting program")
+      except KeyboardInterrupt:
+        print("\nExiting program")
 
-finally:
-    if kinect_process is not None and kinect_process.poll() is None:
-        kinect_process.terminate()
-    GPIO.cleanup()
+      finally:
+          if kinect_process is not None and kinect_process.poll() is None:
+              kinect_process.terminate()
+          GPIO.cleanup()
   </code>
     </pre>
     </details>
