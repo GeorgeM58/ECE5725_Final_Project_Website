@@ -203,23 +203,41 @@
 
   <!-- Sticky Nav -->
   <nav>
-    <a onclick="document.getElementById('Introduction').scrollIntoView({ behavior: 'smooth' });">
-      Introduction
-    </a>
     <a onclick="document.getElementById('Project Objective').scrollIntoView({ behavior: 'smooth' });">
       Project Objective
     </a>
+    <a onclick="document.getElementById('video').scrollIntoView({ behavior: 'smooth' });">
+      Demo Video
+    </a>
+    <a onclick="document.getElementById('Introduction').scrollIntoView({ behavior: 'smooth' });">
+      Introduction
+    </a>
     <a onclick="document.getElementById('Design').scrollIntoView({ behavior: 'smooth' });">
       Design
-    </a>
-    <a onclick="document.getElementById('Drawings').scrollIntoView({ behavior: 'smooth' });">
-      Drawings
     </a>
     <a onclick="document.getElementById('Testing').scrollIntoView({ behavior: 'smooth' });">
       Testing
     </a>
     <a onclick="document.getElementById('Result').scrollIntoView({ behavior: 'smooth' });">
       Result
+    </a>
+    <a onclick="document.getElementById('Conclusion').scrollIntoView({ behavior: 'smooth' });">
+      Conclusion
+    </a>
+    <a onclick="document.getElementById('Future Work').scrollIntoView({ behavior: 'smooth' });">
+      Future Work
+    </a>
+    <a onclick="document.getElementById('Budget').scrollIntoView({ behavior: 'smooth' });">
+      Budget
+    </a>
+    <a onclick="document.getElementById('The Team').scrollIntoView({ behavior: 'smooth' });">
+      The Team
+    </a>
+    <a onclick="document.getElementById('References').scrollIntoView({ behavior: 'smooth' });">
+      References
+    </a>
+    <a onclick="document.getElementById('The Code Listing').scrollIntoView({ behavior: 'smooth' });">
+      The Code Listing
     </a>
   </nav>
 
@@ -352,7 +370,7 @@
       1) The Kinect begins streaming depth data.
     </p>
     <p>
-      <strong>2)</strong> The Kinect device context <code>freenect_context</code> is initialized and it opens
+      2) The Kinect device context <code>freenect_context</code> is initialized and it opens
       <code>freenect_device</code>.
     </p>
 
@@ -389,11 +407,35 @@
       will create a renderer and a texture for rendering depth data
       using RGB24 pixel format of dimensions 480x640.
     </p>
-    <div
-      style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 20px;">
-      <img src="photos/photo1.png" alt="Team with Sandbox"
-        style="width: 45%; max-width: 400px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-    </div>
+    <details
+      style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
+      <summary
+        style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
+        View Code Block
+      </summary>
+      <pre
+        style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
+  <code style="color: #333;">
+    int init_sdl() {
+      if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+          fprintf(stderr, "SDL Init failed: %s\n", SDL_GetError());
+          return -1;
+      }
+  
+      window = SDL_CreateWindow("Kinect Depth Viewer", 500, SDL_WINDOWPOS_UNDEFINED, 1480, 1080, 0);
+      renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+      texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
+  
+      if (!window || !renderer || !texture) {
+          fprintf(stderr, "SDL component creation failed\n");
+          return -1;
+      }
+  
+      return 0;
+  }
+  </code>
+    </pre>
+    </details>
     <p>
       4) Next we used the depth callback function using freenect_set_depth_callback
       to call depth_cb. This receives the depth data from the Kinect device and
@@ -405,12 +447,54 @@
       and assigns those RGB values to the corresponding pixel in the texture.
       If the value is out of range then the color is assigned to be grey.
     </p>
-    <div
-      style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 20px;">
-      <img src="photos/photo2.png" alt="Team with Sandbox"
-        style="width: 45%; max-width: 400px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-    </div>
-    <p>
+    <details
+      style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
+      <summary
+        style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
+        View Code Block
+      </summary>
+      <pre
+        style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
+  <code style="color: #333;">
+    void depth_cb(freenect_device *dev, void *depth, uint32_t timestamp){
+      uint16_t *d = (uint16_t*)depth;
+      unsigned char rgb[WIDTH * HEIGHT * 3];
+  
+      for (int y = 0; y < HEIGHT; ++y) {
+          for (int x = 0; x < WIDTH; ++x) {
+              uint16_t v = d[y * WIDTH + x];
+              int index = (y * WIDTH + x) * 3;
+  
+              if (v >= 1100 && v <= 1700) {
+                  float norm = 1.0f - (float)(v - 1300) / 100.0f; 
+                  float r = fminf(fmaxf(1.5f - fabsf(4.0f * norm - 3.0f), 0.0f), 1.0f);
+                  float g = fminf(fmaxf(1.5f - fabsf(4.0f * norm - 2.0f), 0.0f), 1.0f);
+                  float b = fminf(fmaxf(1.5f - fabsf(4.0f * norm - 1.0f), 0.0f), 1.0f);
+  
+                  rgb[index + 0] = (uint8_t)(r * 255);
+                  rgb[index + 1] = (uint8_t)(g * 255);
+                  rgb[index + 2] = (uint8_t)(b * 255);
+              } else {
+                  rgb[index + 0] = 64;
+                  rgb[index + 1] = 0;
+                  rgb[index + 2] = 0;
+              }
+          }
+      }
+  
+      SDL_UpdateTexture(texture, NULL, rgb, WIDTH * 3);
+      SDL_RenderClear(renderer);
+  
+      SDL_Rect src_rect = {160, 120, 320, 240};
+  
+      SDL_Rect dst_rect = {0, 0, 1480, 1080};
+  
+      SDL_RenderCopyEx(renderer, texture, &src_rect, &dst_rect, 0, NULL, SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL);
+      SDL_RenderPresent(renderer);
+  }>
+    </pre>
+    </details>
+    q <p>
       6) The final color-mapped image is sent to the projector, which overlays the visual representation onto the sand.
     </p>
     <p>
@@ -435,7 +519,8 @@
       Given the limited computational resources of the Raspberry Pi, we prioritized efficiency:
     </p>
     <p>
-      All computationally intensive tasks, especially per-frame depth processing and color mapping, were implemented in
+      All computationally intensive tasks, especially per-frame depth processing and color mapping, were implemented
+      in
       C.
     </p>
     <p>
@@ -445,7 +530,8 @@
 
     <h4>Challenges and Solutions</h4>
     <p>
-      Performance Bottlenecks: To enable real time performance, we both utilized the libfreenect library to use all 4 of
+      Performance Bottlenecks: To enable real time performance, we both utilized the libfreenect library to use all 4
+      of
       the
       Raspberry Pi's cores. In addition, we found that the Lab 4 kernel removed certain functionalities
       that were necessary for high performance. As a result, the Lab 3 kernel had files that
@@ -610,12 +696,22 @@
   <section id="References">
     <h2>References</h2>
     <p>
-      #Todo
+      [1] C. Beals, “How to Build an Augmented Reality Sandbox,” bealsscience. Accessed: May 10, 2025. [Online].
+      Available: https://www.bealsscience.com/post/2017/06/07/augmented-reality-sandbox-will-blow-your-mind
+      <br />
+      [2] “OpenKinect.” Accessed: May 10, 2025. [Online]. Available: https://github.com/OpenKinect
+      <br />
+      [3] “SDL library in C/C++ with examples,” GeeksforGeeks. Accessed: May 10, 2025. [Online]. Available:
+      https://www.geeksforgeeks.org/sdl-library-in-c-c-with-examples/
+      <br />
+      [4] J. Skovira, “ECE 5725 Lab 1,” 2025. Lab 1_Spring2025_v2.pdf. Accessed: May 10, 2025. [Online].
+      <br />
+      [5] J. Skovira, “ECE 5725 Lab 3,” 2025. Lab 3_Spring2025_v2.pdf. Accessed: May 10, 2025. [Online].
     </p>
   </section>
 
-  <section id="References">
-    <h2>Contributions</h2>
+  <section id="Distribution">
+    <h2>Distribution</h2>
     <p>
       Given that George Maidhof is an ECE Major and Giorgi Berndt is a CS Major,
       George spearheaded the work on the hardware side while Giorgi focused on
