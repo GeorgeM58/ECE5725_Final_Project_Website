@@ -614,6 +614,8 @@
       <li>
         <span style="font-weight: bold; text-decoration: underline;">Install Dependencies</span>: Below are the
         necessary dependencies to get the Xbox 360 Kinect 1414 to work on the Raspberry Pi 4.
+        <pre
+          style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); overflow-x: auto; margin-top: 8px;">
         <code>
           sudo apt update
           sudo apt upgrade
@@ -626,6 +628,7 @@
           sudo python2 -m pip install cython
           sudo apt install -y cmake build-essential pkg-config
         </code>
+        </pre>
       </li>
       <br>
       <li>
@@ -633,6 +636,8 @@
           Libfreenect</span>:
         In your home directory (home/pi/) and install the OpenKinect's Libfreenect and extract it and its dependencies
         by doing the following:
+        <pre
+          style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); overflow-x: auto; margin-top: 8px;">
         <code>
           git clone https://github.com/OpenKinect/libfreenect.git
           cd libfreenect
@@ -641,17 +646,21 @@
           make -j4
           sudo make install
         </code>
+        </pre>
       </li>
       <br>
       <li>
         <span style="font-weight: bold; text-decoration: underline;">Using Cython for Bindings and Wrappers</span>:
         Upon installed and building libfreenect, you will need to install Cython for the bindings and wrappers in order
         to utilize the libfreenect in your code. Perform the following:
+        <pre
+          style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); overflow-x: auto; margin-top: 8px;">
         <code>
           cd ../wrappers/python
           cython freenect.pyx
           sudo python3 setup.py install
         </code>
+        </pre>
         <br>
         From there, your library should be properly installed and working as intended.
       </li>
