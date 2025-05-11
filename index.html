@@ -242,7 +242,8 @@
       Inspired by our childhood experiences, we developed a system that
       encourages user interaction by allowing changes in the sand's shape to be reflected in a dynamic, color-mapped
       projection.
-      This project serves as a creative application of concepts learned in class, particularly GPIO control and real-time
+      This project serves as a creative application of concepts learned in class, particularly GPIO control and
+      real-time
       data processing with the Raspberry Pi, while also offering a fun demonstration of how physical changes can be
       reflected as inputs and can drive real time changes in a digital
       output in an intuitive and entertaining way.
@@ -352,18 +353,34 @@
     </p>
     <p>
       2) The Kinect device context freenect_context is initialized and
-      it opens freenect_device. 
+      it opens freenect_device.
     </p>
-    <div
-      style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 20px;">
-      <img src="photos/photo3.png" alt="Team with Sandbox"
-        style="width: 45%; max-width: 400px; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-    </div>
+    <details style="margin-top: 20px;">
+      <summary style="cursor: pointer; font-weight: bold;">View Code Block</summary>
+      <pre
+        style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); overflow-x: auto;">
+<code>
+if (freenect_init(&f_ctx, NULL) &lt; 0) {
+    printf("Freenect_Init Failed\n");
+    return -1;
+}
+
+if (freenect_open_device(f_ctx, &f_dev, 0) &lt; 0) {
+    printf("Freenect Open Device Failed\n");
+    return -1;
+}
+
+if (init_sdl() &lt; 0) {
+    return -1;
+}
+</code>
+  </pre>
+    </details>
     <p>
       3) The SDL2 window, renderer, and texture are initialized for displaying
-      the depth data. The function init_sdl will create a window 
-      called "Kinect Depth Viewer" with dimensions 1480x1080. Then it 
-      will create a renderer and a texture for rendering depth data 
+      the depth data. The function init_sdl will create a window
+      called "Kinect Depth Viewer" with dimensions 1480x1080. Then it
+      will create a renderer and a texture for rendering depth data
       using RGB24 pixel format of dimensions 480x640.
     </p>
     <div
@@ -373,11 +390,11 @@
     </div>
     <p>
       4) Next we used the depth callback function using freenect_set_depth_callback
-      to call depth_cb. This receives the depth data from the Kinect device and 
+      to call depth_cb. This receives the depth data from the Kinect device and
       processes each pixel.
     </p>
     <p>
-      5) Each depth value is checked to be within the range 1100 to 1700 and 
+      5) Each depth value is checked to be within the range 1100 to 1700 and
       then is normalized. This normalized value is mapped to RGB colors
       and assigns those RGB values to the corresponding pixel in the texture.
       If the value is out of range then the color is assigned to be grey.
@@ -445,18 +462,18 @@
     <h2>Testing</h2>
     <p>
       For our testing, we broke down the project into several components.
-      First, we had to get the depth sensors working. For that we tested out 
-      several libraries and then tried doing basic rendering of the scene by 
-      setting a threshold value and setting all values below that value to red 
-      and all values above it to blue. After confirming and getting that working 
-      we then moved on to calibrating the projector from the computer. 
-      This was done to make sure we could properly align the colors with 
+      First, we had to get the depth sensors working. For that we tested out
+      several libraries and then tried doing basic rendering of the scene by
+      setting a threshold value and setting all values below that value to red
+      and all values above it to blue. After confirming and getting that working
+      we then moved on to calibrating the projector from the computer.
+      This was done to make sure we could properly align the colors with
       the map and make sure that the depth sensor and projector could be aligned together.
       Next, we then debugged implementing real time functionality.
-      The libfreenect library allowed us to use all four cores on the Pi 
-      and interestingly, using the kernel from Lab 3 as opposed to Lab 4 
-      also sped up performance significantly. Lastly, we then just implemented 
-      GPIO button functionality so that we could use the Pi to initialize and 
+      The libfreenect library allowed us to use all four cores on the Pi
+      and interestingly, using the kernel from Lab 3 as opposed to Lab 4
+      also sped up performance significantly. Lastly, we then just implemented
+      GPIO button functionality so that we could use the Pi to initialize and
       terminate the project.
     </p>
   </section>
@@ -595,8 +612,8 @@
     <h2>Contributions</h2>
     <p>
       Given that George Maidhof is an ECE Major and Giorgi Berndt is a CS Major,
-      George spearheaded the work on the hardware side while Giorgi focused on 
-      the software side. Given Giorgi was traveling some of the last week prior to the 
+      George spearheaded the work on the hardware side while Giorgi focused on
+      the software side. Given Giorgi was traveling some of the last week prior to the
       competition, George ended up spending more time in the lab
       so Giorgi made up for it by authoring most of the work on the website.
     </p>
