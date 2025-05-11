@@ -619,6 +619,56 @@
     </div>
   </section>
 
+  <section id="Conclusion">
+    <h2>Conclusion</h2>
+    <p>
+      In completing this project, we were able to successfully create a topographic sandbox on a linux based operating
+      system through using a depth camera from an XBox 360 Kinect and a Raspberry Pi 4. Our final project helped us
+      learn how to tailor a solution for an uncertain desing process, learn to adjust to the limitations of the
+      hardware, all within a timely manner. We were able to create a close to real-time topographic map of the sandbox
+      with minimal delay and utilization of multi-core to solve a hardware problem even though it was handled through a
+      open source library. Also, as an Electrical and Computer Engineer and a Computer Scientist, we develoepd
+      mechanical skills on assembly of a sturdy frame and mount for the Kinect and projector.
+      <br />
+      Some mistakes that we made along the way included some mistakes on the mounting of the projector resulting in some
+      off center behavior. Also, when working in the Lab 4 kernel, we ran into difficulties with getting certain
+      librarbies to work that we needed including Pygame and envtest. When prepping, we should have verified that these
+      we including before realizing later on, resulting in a swap to a older kernel close to our due date. Lastly, by
+      playing around with our operating system for boot last minute, we had made some mistakes to the system that
+      resulted in our "startx" command not working as intended, though the project still worked. With that being said,
+      our biggest takeaway is to always test our system step by step along with keeping a backup of the system in case
+      things go wrong!
+    </p>
+  </section>
+
+  <section id="Future Work"
+    style="background-color: #f9f9f9; padding: 40px 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin: 40px auto; max-width: 900px;">
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 25px;">Future Work</h2>
+    <p style="font-size: 17px; color: #333; line-height: 1.6;">
+      When working on this project, some small flaws we ran into that we would either like to address or improve are as
+      follows:
+    </p>
+    <ol style="text-align: left; padding-left: 20px; font-size: 16px; color: #444; line-height: 1.7;">
+      <li>
+        <span style="font-weight: bold; text-decoration: underline;">Centering the projector to the sandbox</span>:
+        Starting our program from boot via <code>.bashrc</code> had side effects that caused the window to spawn
+        off-center. This slightly shifted the projection upward and to the right. We could fix this by physically
+        adjusting the projector mount.
+      </li>
+      <li>
+        <span style="font-weight: bold; text-decoration: underline;">Adding touchscreen buttons</span>: Initially, we
+        couldn't use the PiTFT with our Lab 4 kernel, which lacked Pygame support. After switching to the Lab 3 kernel,
+        the TFT worked, but due to time constraints, we used GPIO buttons instead of touchscreen GUI buttons. Adding a
+        touchscreen interface would improve usability.
+      </li>
+      <li>
+        <span style="font-weight: bold; text-decoration: underline;">Deeper color mapping</span>: We implemented a color
+        range from red to blue, but additional enhancements could include gradient rings for more distinct terrain lines
+        and a richer color palette.
+      </li>
+    </ol>
+  </section>
+
   <section id="Budget">
     <h2>Budget</h2>
     <p>The materials for our project revolved around making use of any unused materials lying around within the ECE
@@ -694,6 +744,27 @@
     </div>
   </section>
 
+  <section id="The Team">
+    <h2>The Team</h2>
+    <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
+      <div
+        style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 250px; text-align: center;">
+        <img src="photos/member1.jpg" alt="Member 1"
+          style="width: 100%; border-radius: 12px; object-fit: cover; height: 300px; margin-bottom: 15px;">
+        <h3 style="margin-bottom: 5px;">George Maidhof (gpm58)</h3>
+        <p style="color: #777;">Electrical and Computer Engineering</p>
+      </div>
+
+      <div
+        style="background: white; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 250px; text-align: center;">
+        <img src="photos/member2.jpg" alt="Member 2"
+          style="width: 100%; border-radius: 12px; object-fit: cover; height: 300px; margin-bottom: 15px;">
+        <h3 style="margin-bottom: 5px;">Giorgi Berndt (gb449)</h3>
+        <p style="color: #777;">Computer Science</p>
+      </div>
+    </div>
+  </section>
+
   <section id="References">
     <h2>References</h2>
     <p>
@@ -719,6 +790,13 @@
       the software side. Given Giorgi was traveling some of the last week prior to the
       competition, George ended up spending more time in the lab
       so Giorgi made up for it by authoring most of the work on the website.
+    </p>
+  </section>
+
+  <section id="The Code Listing">
+    <h2>The Code Listing</h2>
+    <p>
+      #Todo
     </p>
   </section>
 
