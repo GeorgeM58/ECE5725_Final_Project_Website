@@ -352,30 +352,36 @@
       1) The Kinect begins streaming depth data.
     </p>
     <p>
-      2) The Kinect device context freenect_context is initialized and
-      it opens freenect_device.
+      <strong>2)</strong> The Kinect device context <code>freenect_context</code> is initialized and it opens
+      <code>freenect_device</code>.
     </p>
-    <details style="margin-top: 20px;">
-      <summary style="cursor: pointer; font-weight: bold;">View Code Block</summary>
+
+    <details
+      style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
+      <summary
+        style="cursor: pointer; font-weight: 600; padding: 12px 16px; background: linear-gradient(135deg, #ff9999, #ff4d4d); color: white; font-size: 1rem;">
+        View Code Block
+      </summary>
       <pre
-        style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); overflow-x: auto;">
-<code>
-if (freenect_init(&f_ctx, NULL) &lt; 0) {
-    printf("Freenect_Init Failed\n");
-    return -1;
-}
-
-if (freenect_open_device(f_ctx, &f_dev, 0) &lt; 0) {
-    printf("Freenect Open Device Failed\n");
-    return -1;
-}
-
-if (init_sdl() &lt; 0) {
-    return -1;
-}
-</code>
-  </pre>
+        style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
+    <code style="color: #333;">
+    if (freenect_init(&f_ctx, NULL) &lt; 0) {
+        printf("Freenect_Init Failed\n");
+        return -1;
+    }
+    
+    if (freenect_open_device(f_ctx, &f_dev, 0) &lt; 0) {
+        printf("Freenect Open Device Failed\n");
+        return -1;
+    }
+    
+    if (init_sdl() &lt; 0) {
+        return -1;
+    }
+    </code>
+      </pre>
     </details>
+
     <p>
       3) The SDL2 window, renderer, and texture are initialized for displaying
       the depth data. The function init_sdl will create a window
