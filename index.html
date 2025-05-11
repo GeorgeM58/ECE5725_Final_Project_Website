@@ -215,6 +215,9 @@
     <a onclick="document.getElementById('Design').scrollIntoView({ behavior: 'smooth' });">
       Design
     </a>
+    <a onclick="document.getElementById('Installation Guide').scrollIntoView({ behavior: 'smooth' });">
+      Installation Guide
+    </a>
     <a onclick="document.getElementById('Testing').scrollIntoView({ behavior: 'smooth' });">
       Testing
     </a>
@@ -240,7 +243,7 @@
       Distribution
     </a>
     <a onclick="document.getElementById('The Code Listing').scrollIntoView({ behavior: 'smooth' });">
-      The Code Listing
+      Code Listing
     </a>
   </nav>
 
@@ -299,7 +302,7 @@
       The Kinect captures a continuous stream of depth information, generating 480x640 arrays of Z-values that represent
       the height of the sand surface.
       These depth values are processed in real time and mapped to a dynamic color gradient, simulating elevation-based
-      coloration such as that found on topographic maps.
+      coloration like that found on topographic maps.
       The resulting color map is then projected directly onto the sandbox surface, creating a live, responsive display
       that updates as the sand is moved.
       We also integrated GPIO-controlled buttons on the Raspberry Pi to easily start and stop the system, providing a
@@ -323,7 +326,7 @@
     <p>
       The core components include the Kinect 1414 depth sensor, a Raspberry Pi 4, a vertically-mounted projector, and
       physical GPIO buttons on a TFT for control.
-      The Kinect captures a live 480x640 stream of depth data which is sent to the Raspberry Pi via USB.
+      The Kinect captures a live 480x640 stream of depth data which is sent to the Raspberry Pi via USB 3.0.
       The Raspberry Pi processes this depth data and generates a colorized image representing terrain elevation, which
       is then projected directly onto the sandbox.
       GPIO buttons connected to the Pi allow users to start and stop the visualization system.
@@ -333,18 +336,21 @@
     <h4>Hardware Design</h4>
     <p>
       Sensors & Processing: The Xbox 360 Kinect 1414 serves as the depth sensor, interfacing directly with the Raspberry
-      Pi 4 over USB. The Kinect provides a continuous stream of z-values corresponding to the depth of points within its
+      Pi 4 over USB 3.0. The Kinect provides a continuous stream of z-values corresponding to the depth of points within
+      its
       field of view.
     </p>
+    <br>
     <p>
       Projection Setup: A standard overhead projector, provided by Professor Skovira, is mounted above the sandbox and
       aligned vertically to ensure proper projection coverage and minimize distortion.
     </p>
+    <br>
     <p>
       GPIO Controls: GPIO buttons exposed by the TFT are accessable by the Raspberry Pi. The GPIO pins are used for
       starting and
-      stopping the system. These allow the user to initiate or terminate the program without using a keyboard or SSH
-      interface.
+      stopping the system. These allow the user to initiate or terminate the program without using a keyboard and mouse
+      or SSH interface.
     </p>
     <br />
 
@@ -352,6 +358,7 @@
     <p>
       The system software is implemented using a combination of C and Python, leveraging the strengths of each language:
     </p>
+    <br>
     <p>
       C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was
       made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the
@@ -359,6 +366,7 @@
       library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This allowed for
       the real time performance that is seen in our demo.
     </p>
+    <br>
     <p>
       Python Script: Manages GPIO input and user interaction. A Python loop listens for GPIO button presses and controls
       the lifecycle of the C-based visualization subprocess.
@@ -388,12 +396,12 @@
         style="margin: 0; padding: 16px; background-color: #f9f9f9; font-size: 0.95rem; line-height: 1.5; overflow-x: auto;">
     <code style="color: #333;">
     if (freenect_init(&f_ctx, NULL) &lt; 0) {
-        printf("Freenect_Init Failed\n");
+        printf("Freenect_Init Not Working\n");
         return -1;
     }
     
     if (freenect_open_device(f_ctx, &f_dev, 0) &lt; 0) {
-        printf("Freenect Open Device Failed\n");
+        printf("Freenect Open Device Not Working\n");
         return -1;
     }
     
@@ -422,7 +430,7 @@
   <code style="color: #333;">
     int init_sdl() {
       if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-          fprintf(stderr, "SDL Init failed: %s\n", SDL_GetError());
+          fprintf(stderr, "SDL Init Not Working: %s\n", SDL_GetError());
           return -1;
       }
   
@@ -431,7 +439,7 @@
       texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
   
       if (!window || !renderer || !texture) {
-          fprintf(stderr, "SDL component creation failed\n");
+          fprintf(stderr, "SDL Not Working\n");
           return -1;
       }
   
@@ -451,7 +459,8 @@
       5) Each depth value is checked to be within the range 1100 to 1700 and
       then is normalized. This normalized value is mapped to RGB colors
       and assigns those RGB values to the corresponding pixel in the texture.
-      If the value is out of range then the color is assigned to be grey.
+      If the value is out of range then the color is assigned to be grey. Based on the orientation of the projector and
+      kinect, we had to flip the image 180 degrees as well.
     </p>
     <details
       style="margin-top: 20px; background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); overflow: hidden; transition: all 0.3s ease;">
@@ -505,6 +514,7 @@
     <p>
       6) The final color-mapped image is sent to the projector, which overlays the visual representation onto the sand.
     </p>
+    <br>
     <p>
       This loop repeats continuously, ensuring real-time updates as users manipulate the sand.
     </p>
@@ -516,7 +526,7 @@
       Our sandbox has a square shape, while the camera feed and image output are rectangular.
       When booting from the Pi, we had to manually adjust the height and angle of the projector to ensure that the
       projected image correctly covered
-      the sandbox area.
+      the sandbox area. This could simply be fixed by changing the mount to move a little forward and to the right.
       However, when running it from our computers, we could provide a digital offset to ensure accurate rendering.
       The depth range was also calibrated to match the typical height variations achievable within the sandbox.
     </p>
@@ -526,11 +536,13 @@
     <p>
       Given the limited computational resources of the Raspberry Pi, we prioritized efficiency:
     </p>
+    <br>
     <p>
       All computationally intensive tasks, especially per-frame depth processing and color mapping, were implemented
       in
       C.
     </p>
+    <br>
     <p>
       Python was used only where performance was not critical (GPIO control).
     </p>
@@ -543,29 +555,83 @@
       the
       Raspberry Pi's cores. In addition, we found that the Lab 4 kernel removed certain functionalities
       that were necessary for high performance. As a result, the Lab 3 kernel had files that
-      enhanced our performance.
+      enhanced our performance that were previously removed from the Lab 4 kernel.
     </p>
+    <br>
     <p>
       Projection Alignment:
       On the computer, we could just set an offset to accurately map onto the sandbox. However, when booting from
       the Raspberry Pi, we had to make physical adjustments to the
       projector in order to try to align our projection to the sand without having an offset.
     </p>
+    <br>
     <p>
       GPIO Responsiveness:
       Handling button presses with Python's GPIO library worked reliably after implementing and
-      ensuring the subprocess management was clean.
+      ensuring the subprocess management was clean. We were originally going to use touchscreen button functionality but
+      it did not originally work with the Lab 4 kernel which is why we had swapped to the Lab 3 kernel. When doing
+      testing for the TFT touchscreen button functionality, we were unable to spawn two windows (one on the TFT and one
+      through the Projector) at the same time which
+      is why we took the GPIO button approach.
+    </p>
+    <br>
+    <p>
+      Boot From Start:
+      We found that we had issues when using Crontab in order to automate our system as everything we had tried, even
+      using direct path names resulted in nothing working. We eventually swapped from using Crontab to using bashrc
+      which
+      worked perfectly. With this though, we had lost some fuctionality where the window would spawn off center but this
+      could be fixed mannually.
     </p>
   </section>
+
+  <section id="Installation Guide"
+    style="background-color: #f9f9f9; padding: 40px 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin: 40px auto; max-width: 900px;">
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 25px;">Installation Guide</h2>
+    <p style="font-size: 17px; color: #333; line-height: 1.6;">
+      When working on this project, some small flaws we ran into that we would either like to address or improve are as
+      follows:
+    </p>
+    <br>
+    <ol style="text-align: left; padding-left: 20px; font-size: 16px; color: #444; line-height: 1.7;">
+      <li>
+        <span style="font-weight: bold; text-decoration: underline;">Start with the Lab 3 Kernel</span>:
+        #Todo
+      </li>
+      <li>
+        <span style="font-weight: bold; text-decoration: underline;">Install Dependencies</span>:
+      </li>
+      <li>
+        <span style="font-weight: bold; text-decoration: underline;">Downloading OpenKinect's Libfreenect</span>:
+        #Todo
+      </li>
+      <li>
+        <span style="font-weight: bold; text-decoration: underline;">Building Enviorment</span>:
+        #Todo
+      </li>
+      <li>
+        <span style="font-weight: bold; text-decoration: underline;">Using Cython for Bindings and Wrappers</span>:
+        #Todo
+      </li>
+      <li>
+        <span style="font-weight: bold; text-decoration: underline;">Setup and Install</span>:
+        #Todo
+      </li>
+    </ol>
+  </section>
+
 
   <section id="Testing">
     <h2>Testing</h2>
     <p>
       For our testing, we broke down the project into several components.
       First, we had to get the depth sensors working. For that we tested out
-      several libraries and then tried doing basic rendering of the scene by
+      several libraries where we ended up doing the project through libfreenect, an open source Linux library for the
+      Xbox 360 Kinect.
+      We then tried doing basic rendering of the scene by
       setting a threshold value and setting all values below that value to red
-      and all values above it to blue. After confirming and getting that working
+      and all values above it to blue after successfully being able to read depth data. After confirming and getting
+      that working
       we then moved on to calibrating the projector from the computer.
       This was done to make sure we could properly align the colors with
       the map and make sure that the depth sensor and projector could be aligned together.
@@ -573,8 +639,10 @@
       The libfreenect library allowed us to use all four cores on the Pi
       and interestingly, using the kernel from Lab 3 as opposed to Lab 4
       also sped up performance significantly. Lastly, we then just implemented
-      GPIO button functionality so that we could use the Pi to initialize and
-      terminate the project.
+      GPIO button as we had regained functionality from the PiTFT when swapping to the Lab 3 kernel. We used this
+      functionality so that we could use
+      the Pi to initialize and
+      terminate the project from boot.
     </p>
   </section>
 
@@ -597,7 +665,8 @@
       Users were able to engage with our project by actively shaping the
       sand in the sandbox to create various topographic features.
       They were able to observe immediate changes in the projected map
-      that reflected the changes that they had created in the sand.
+      that reflected the changes that they had created in the sand. Through visually tesitng, we were able to determine
+      its effectivness and accuracy.
     </p>
     <br>
     <h4>Challenges Encountered</h4>
