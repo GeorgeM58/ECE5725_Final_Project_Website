@@ -606,33 +606,56 @@
     <br>
     <ol style="text-align: left; padding-left: 20px; font-size: 16px; color: #444; line-height: 1.7;">
       <li>
-        <span style="font-weight: bold; text-decoration: underline;">Start with the Lab 3 Kernel</span>:
-        #Todo
+        <span style="font-weight: bold; text-decoration: underline;">Start with the Lab 3 Kernel</span>: When starting
+        our project, we suggest you to start with the Lab 3 kernel it performed the best for us speed wise and also
+        worked with the PiTFT.
       </li>
       <br>
       <li>
-        <span style="font-weight: bold; text-decoration: underline;">Install Dependencies</span>:
+        <span style="font-weight: bold; text-decoration: underline;">Install Dependencies</span>: Below are the
+        necessary dependencies to get the Xbox 360 Kinect 1414 to work on the Raspberry Pi 4.
+        <code>
+          sudo apt update
+          sudo apt upgrade
+
+          sudo apt install libfreenect-dev libsdl2-dev libusb-1.0-0-dev
+          sudo apt install python2 python2-dev
+          sudo python2 -m pip install cython
+          curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+          sudo python2 get-pip.py
+          sudo python2 -m pip install cython
+          sudo apt install -y cmake build-essential pkg-config
+        </code>
       </li>
       <br>
       <li>
-        <span style="font-weight: bold; text-decoration: underline;">Downloading OpenKinect's Libfreenect</span>:
-        #Todo
-      </li>
-      <br>
-      <li>
-        <span style="font-weight: bold; text-decoration: underline;">Building Enviorment</span>:
-        #Todo
+        <span style="font-weight: bold; text-decoration: underline;">Downloading and Build OpenKinect's
+          Libfreenect</span>:
+        In your home directory (home/pi/) and install the OpenKinect's Libfreenect and extract it and its dependencies
+        by doing the following:
+        <code>
+          git clone https://github.com/OpenKinect/libfreenect.git
+          cd libfreenect
+          mkdir build && cd build
+          cmake .. -DBUILD_EXAMPLES=ON -DBUILD_CPP=ON
+          make -j4
+          sudo make install
+        </code>
       </li>
       <br>
       <li>
         <span style="font-weight: bold; text-decoration: underline;">Using Cython for Bindings and Wrappers</span>:
-        #Todo
+        Upon installed and building libfreenect, you will need to install Cython for the bindings and wrappers in order
+        to utilize the libfreenect in your code. Perform the following:
+        <code>
+          cd ../wrappers/python
+          cython freenect.pyx
+          sudo python3 setup.py install
+        </code>
+        <br>
+        From there, your library should be properly installed and working as intended.
       </li>
       <br>
-      <li>
-        <span style="font-weight: bold; text-decoration: underline;">Setup and Install</span>:
-        #Todo
-      </li>
     </ol>
   </section>
 
