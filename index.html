@@ -5,198 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Topographic Sandbox</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5f5f5;
-      color: #333;
-    }
-
-    /* Sticky Nav */
-    nav {
-      position: sticky;
-      top: 0;
-      background: linear-gradient(135deg, #ff9999, #ff4d4d);
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      z-index: 1000;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      position: relative;
-      padding: 0.3rem 0;
-      transition: all 0.3s ease;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      height: 2px;
-      width: 100%;
-      background-color: #d4f5e9;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.3s ease;
-    }
-
-    nav a:hover {
-      transform: scale(1.05);
-      color: #d4f5e9;
-    }
-
-    nav a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-
-    nav a.active {
-      color: #fffae1;
-    }
-
-    header {
-      height: 100vh;
-      background: url('photos/background.jpg') no-repeat center center;
-      background-size: cover;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    header h1 {
-      font-size: 3rem;
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 3px solid white;
-      max-width: 90%;
-    }
-
-    @keyframes typing {
-      from {
-        width: 0;
-      }
-
-      to {
-        width: 100%;
-      }
-    }
-
-    @keyframes blink {
-      50% {
-        border-color: transparent;
-      }
-    }
-
-    header p {
-      font-size: 1.2rem;
-      margin-top: 10px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 2s ease-out forwards;
-      animation-delay: 2s;
-    }
-
-    .scroll-down {
-      margin-top: 40px;
-      font-size: 1.5rem;
-      cursor: pointer;
-      animation: bounce 2s infinite;
-      transition: transform 0.3s;
-    }
-
-    .scroll-down:hover {
-      transform: scale(1.2);
-    }
-
-    section {
-      padding: 80px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    section h2 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    section p {
-      line-height: 1.6;
-      font-size: 1.1rem;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes bounce {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(8px);
-      }
-    }
-
-    /* Handles Section Styling */
-    .handles-logos {
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-      margin-top: 30px;
-      flex-wrap: wrap;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    }
-
-    .handles-logos.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .handles-logos img {
-      width: 140px;
-      height: auto;
-      border-radius: 16px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .handles-logos a:hover img {
-      transform: scale(1.15) rotate(2deg);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 
 <body>
@@ -297,12 +106,15 @@
   <section id="Introduction">
     <h2>Introduction</h2>
     <p>
-        We created a sandbox that projects a color map using real-time topographical data using an Xbox 360 Kinect, a Raspberry Pi, and a Projector. 
-        The Kinect captures a continuous stream of depth data in a 480x640 array that are the difference between the Xbox Kinect and the sand surface. 
-        These depth values are processed in real-time and mapped to a texture. 
-        The resulting color map is projected onto the sand, creating a live display that changes as users interact with our sandbox. 
-        We also integrated GPIO-controlled buttons on the Raspberry Pi to easily start and stop the system.
-       </p>
+      We created a sandbox that projects a color map using real-time topographical data using an Xbox 360 Kinect, a
+      Raspberry Pi, and a Projector.
+      The Kinect captures a continuous stream of depth data in a 480x640 array that are the difference between the Xbox
+      Kinect and the sand surface.
+      These depth values are processed in real-time and mapped to a texture.
+      The resulting color map is projected onto the sand, creating a live display that changes as users interact with
+      our sandbox.
+      We also integrated GPIO-controlled buttons on the Raspberry Pi to easily start and stop the system.
+    </p>
   </section>
 
   <section id="Design">
@@ -322,7 +134,7 @@
       The core components include the Kinect 1414 depth sensor, a Raspberry Pi 4, a vertically-mounted projector, and
       physical GPIO buttons on a TFT for control.
       The Kinect captures a live 480x640 stream of depth data which is sent to the Raspberry Pi via USB 3.0.
-      The Raspberry Pi processes the data and generates a texture where the color corresponds to terrain elevation, 
+      The Raspberry Pi processes the data and generates a texture where the color corresponds to terrain elevation,
       which
       is then projected onto the sandbox.
       GPIO buttons connected to the Pi allow users to start and stop the visualization system.
@@ -331,19 +143,21 @@
 
     <h4>Hardware Design</h4>
     <p>
-      Depth Sensor: 
-      The Xbox 360 Kinect 1414 serves as our depth sensor. 
-      The Kinect provides a continuous stream of depth data to the Raspberry Pi 4 over USB 3.0 representing the difference between the Kinect and the sandbox.
+      Depth Sensor:
+      The Xbox 360 Kinect 1414 serves as our depth sensor.
+      The Kinect provides a continuous stream of depth data to the Raspberry Pi 4 over USB 3.0 representing the
+      difference between the Kinect and the sandbox.
     </p>
     <br>
     <p>
-      Projection Setup: 
-      A standard overhead projector, provided by Professor Skovira, is mounted above the sandbox and aligned vertically with the sandbox in a manner to minimize distortion.    </p>
+      Projection Setup:
+      A standard overhead projector, provided by Professor Skovira, is mounted above the sandbox and aligned vertically
+      with the sandbox in a manner to minimize distortion. </p>
     <br>
     <p>
-      GPIO Controls: 
-      GPIO buttons exposed by the TFT are accessible by the Raspberry Pi. 
-      The GPIO pins are used to start and stop the system. 
+      GPIO Controls:
+      GPIO buttons exposed by the TFT are accessible by the Raspberry Pi.
+      The GPIO pins are used to start and stop the system.
       This allows the user to initiate or terminate the program without using a keyboard and mouse.
     </p>
     Refer to the flow diagram below for a visual representation of the system hardware architecture:
@@ -354,15 +168,20 @@
 
       <h4>Software Architecture</h4>
       <p>
-        The system software is implemented using a combination of C and Python, leveraging the strengths of each language:
+        The system software is implemented using a combination of C and Python, leveraging the strengths of each
+        language:
       </p>
       <br>
       <p>
-        C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the libfreenect library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This allowed for the real time performance that is seen in our demo.
+        C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was
+        made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the
+        libfreenect library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This
+        allowed for the real time performance that is seen in our demo.
       </p>
       <br>
       <p>
-        Python Script: Manages GPIO input and user control of the system. The Python code waits for GPIO button presses and on command begins the C code subprocess. It can also be used to terminate the program.
+        Python Script: Manages GPIO input and user control of the system. The Python code waits for GPIO button presses
+        and on command begins the C code subprocess. It can also be used to terminate the program.
       </p>
       <br />
 
@@ -788,15 +607,20 @@
     <ol style="text-align: left; padding-left: 20px; font-size: 16px; color: #444; line-height: 1.7;">
       <li>
         <span style="font-weight: bold; text-decoration: underline;">Centering the projector to the sandbox</span>:
-        Starting our program from boot via <code>.bashrc</code> had side effects that caused the window to spawn off-center. This slightly shifted the projection upward and to the right. We could fix this simply by physically adjusting the projector mount.
+        Starting our program from boot via <code>.bashrc</code> had side effects that caused the window to spawn
+        off-center. This slightly shifted the projection upward and to the right. We could fix this simply by physically
+        adjusting the projector mount.
       </li>
       <li>
-        <span style="font-weight: bold; text-decoration: underline;">Adding touchscreen buttons</span>:  
-        Initially, we couldn't use the PiTFT with our Lab 4 kernel, which lacked Pygame support. After switching to the Lab 3 kernel, the TFT worked, but due to time constraints, we used GPIO buttons instead of touchscreen GUI buttons. Adding a touchscreen interface would be something else we would want to implement.
+        <span style="font-weight: bold; text-decoration: underline;">Adding touchscreen buttons</span>:
+        Initially, we couldn't use the PiTFT with our Lab 4 kernel, which lacked Pygame support. After switching to the
+        Lab 3 kernel, the TFT worked, but due to time constraints, we used GPIO buttons instead of touchscreen GUI
+        buttons. Adding a touchscreen interface would be something else we would want to implement.
       </li>
       <li>
-        <span style="font-weight: bold; text-decoration: underline;">Deeper color mapping</span>: 
-        We implemented a color range from red to blue, but additional enhancements could include gradient rings for more distinct terrain lines and a richer color palette.
+        <span style="font-weight: bold; text-decoration: underline;">Deeper color mapping</span>:
+        We implemented a color range from red to blue, but additional enhancements could include gradient rings for more
+        distinct terrain lines and a richer color palette.
       </li>
     </ol>
   </section>
