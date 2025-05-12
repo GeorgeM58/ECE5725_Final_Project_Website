@@ -297,17 +297,12 @@
   <section id="Introduction">
     <h2>Introduction</h2>
     <p>
-      In this project, we created an interactive topographic sandbox that visualizes real-time topographical data
-      using a Microsoft Xbox 360 Kinect, a Raspberry Pi, and a Projector.
-      The Kinect captures a continuous stream of depth information, generating 480x640 arrays of Z-values that represent
-      the height of the sand surface.
-      These depth values are processed in real time and mapped to a dynamic color gradient, simulating elevation-based
-      coloration like that found on topographic maps.
-      The resulting color map is then projected directly onto the sandbox surface, creating a live, responsive display
-      that updates as the sand is moved.
-      We also integrated GPIO-controlled buttons on the Raspberry Pi to easily start and stop the system, providing a
-      smooth and interactive user experience.
-    </p>
+        We created a sandbox that projects a color map using real-time topographical data using an Xbox 360 Kinect, a Raspberry Pi, and a Projector. 
+        The Kinect captures a continuous stream of depth data in a 480x640 array that are the difference between the Xbox Kinect and the sand surface. 
+        These depth values are processed in real-time and mapped to a texture. 
+        The resulting color map is projected onto the sand, creating a live display that changes as users interact with our sandbox. 
+        We also integrated GPIO-controlled buttons on the Raspberry Pi to easily start and stop the system.
+       </p>
   </section>
 
   <section id="Design">
@@ -327,30 +322,29 @@
       The core components include the Kinect 1414 depth sensor, a Raspberry Pi 4, a vertically-mounted projector, and
       physical GPIO buttons on a TFT for control.
       The Kinect captures a live 480x640 stream of depth data which is sent to the Raspberry Pi via USB 3.0.
-      The Raspberry Pi processes this depth data and generates a colorized image representing terrain elevation, which
-      is then projected directly onto the sandbox.
+      The Raspberry Pi processes the data and generates a texture where the color corresponds to terrain elevation, 
+      which
+      is then projected onto the sandbox.
       GPIO buttons connected to the Pi allow users to start and stop the visualization system.
     </p>
     <br />
 
     <h4>Hardware Design</h4>
     <p>
-      Sensors & Processing: The Xbox 360 Kinect 1414 serves as the depth sensor, interfacing directly with the Raspberry
-      Pi 4 over USB 3.0. The Kinect provides a continuous stream of z-values corresponding to the depth of points within
-      its
-      field of view.
+      Depth Sensor: 
+      The Xbox 360 Kinect 1414 serves as our depth sensor. 
+      The Kinect provides a continuous stream of depth data to the Raspberry Pi 4 over USB 3.0 representing the difference between the Kinect and the sandbox.
     </p>
     <br>
     <p>
-      Projection Setup: A standard overhead projector, provided by Professor Skovira, is mounted above the sandbox and
-      aligned vertically to ensure proper projection coverage and minimize distortion.
-    </p>
+      Projection Setup: 
+      A standard overhead projector, provided by Professor Skovira, is mounted above the sandbox and aligned vertically with the sandbox in a manner to minimize distortion.    </p>
     <br>
     <p>
-      GPIO Controls: GPIO buttons exposed by the TFT are accessable by the Raspberry Pi. The GPIO pins are used for
-      starting and
-      stopping the system. These allow the user to initiate or terminate the program without using a keyboard and mouse
-      or SSH interface.
+      GPIO Controls: 
+      GPIO buttons exposed by the TFT are accessible by the Raspberry Pi. 
+      The GPIO pins are used to start and stop the system. 
+      This allows the user to initiate or terminate the program without using a keyboard and mouse.
     </p>
     Refer to the flow diagram below for a visual representation of the system hardware architecture:
     <div style="text-align: center; margin-top: 20px;">
@@ -360,22 +354,15 @@
 
       <h4>Software Architecture</h4>
       <p>
-        The system software is implemented using a combination of C and Python, leveraging the strengths of each
-        language:
+        The system software is implemented using a combination of C and Python, leveraging the strengths of each language:
       </p>
       <br>
       <p>
-        C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was
-        made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the
-        libfreenect
-        library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This allowed for
-        the real time performance that is seen in our demo.
+        C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the libfreenect library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This allowed for the real time performance that is seen in our demo.
       </p>
       <br>
       <p>
-        Python Script: Manages GPIO input and user interaction. A Python loop listens for GPIO button presses and
-        controls
-        the lifecycle of the C-based visualization subprocess.
+        Python Script: Manages GPIO input and user control of the system. The Python code waits for GPIO button presses and on command begins the C code subprocess. It can also be used to terminate the program.
       </p>
       <br />
 
@@ -599,10 +586,7 @@
   <section id="Installation Guide"
     style="background-color: #f9f9f9; padding: 40px 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin: 40px auto; max-width: 900px;">
     <h2 style="text-align: center; color: #2c3e50; margin-bottom: 25px;">Installation Guide</h2>
-    <p style="font-size: 17px; color: #333; line-height: 1.6;">
-      When working on this project, some small flaws we ran into that we would either like to address or improve are as
-      follows:
-    </p>
+
     <br>
     <ol style="text-align: left; padding-left: 20px; font-size: 16px; color: #444; line-height: 1.7;">
       <li>
@@ -798,27 +782,21 @@
     style="background-color: #f9f9f9; padding: 40px 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin: 40px auto; max-width: 900px;">
     <h2 style="text-align: center; color: #2c3e50; margin-bottom: 25px;">Future Work</h2>
     <p style="font-size: 17px; color: #333; line-height: 1.6;">
-      When working on this project, some small flaws we ran into that we would either like to address or improve are as
-      follows:
+      Some small flaws we ran into that we would either like to address or improve are as follows:
     </p>
     <br>
     <ol style="text-align: left; padding-left: 20px; font-size: 16px; color: #444; line-height: 1.7;">
       <li>
         <span style="font-weight: bold; text-decoration: underline;">Centering the projector to the sandbox</span>:
-        Starting our program from boot via <code>.bashrc</code> had side effects that caused the window to spawn
-        off-center. This slightly shifted the projection upward and to the right. We could fix this by physically
-        adjusting the projector mount.
+        Starting our program from boot via <code>.bashrc</code> had side effects that caused the window to spawn off-center. This slightly shifted the projection upward and to the right. We could fix this simply by physically adjusting the projector mount.
       </li>
       <li>
-        <span style="font-weight: bold; text-decoration: underline;">Adding touchscreen buttons</span>: Initially, we
-        couldn't use the PiTFT with our Lab 4 kernel, which lacked Pygame support. After switching to the Lab 3 kernel,
-        the TFT worked, but due to time constraints, we used GPIO buttons instead of touchscreen GUI buttons. Adding a
-        touchscreen interface would improve usability.
+        <span style="font-weight: bold; text-decoration: underline;">Adding touchscreen buttons</span>:  
+        Initially, we couldn't use the PiTFT with our Lab 4 kernel, which lacked Pygame support. After switching to the Lab 3 kernel, the TFT worked, but due to time constraints, we used GPIO buttons instead of touchscreen GUI buttons. Adding a touchscreen interface would be something else we would want to implement.
       </li>
       <li>
-        <span style="font-weight: bold; text-decoration: underline;">Deeper color mapping</span>: We implemented a color
-        range from red to blue, but additional enhancements could include gradient rings for more distinct terrain lines
-        and a richer color palette.
+        <span style="font-weight: bold; text-decoration: underline;">Deeper color mapping</span>: 
+        We implemented a color range from red to blue, but additional enhancements could include gradient rings for more distinct terrain lines and a richer color palette.
       </li>
     </ol>
   </section>
