@@ -813,12 +813,12 @@
           uint16_t *d = (uint16_t*)depth;
           unsigned char rgb[WIDTH * HEIGHT * 3];
       
-          for (int y = 0; y < HEIGHT; ++y) {
-              for (int x = 0; x < WIDTH; ++x) {
+          for (int y = 0; y &lt; HEIGHT; ++y) {
+              for (int x = 0; x &lt; WIDTH; ++x) {
                   uint16_t v = d[y * WIDTH + x];
                   int index = (y * WIDTH + x) * 3;
       
-                  if (v >= 1100 && v <= 1700) {
+                  if (v >= 1100 && v &lt;= 1700) {
                       float norm = 1.0f - (float)(v - 1300) / 100.0f; 
                       float r = fminf(fmaxf(1.5f - fabsf(4.0f * norm - 3.0f), 0.0f), 1.0f);
                       float g = fminf(fmaxf(1.5f - fabsf(4.0f * norm - 2.0f), 0.0f), 1.0f);
@@ -871,7 +871,7 @@
                   if (e.type == SDL_QUIT) goto quit;
               }
       
-              if (freenect_process_events(f_ctx) < 0) {
+              if (freenect_process_events(f_ctx) &lt; 0) {
                   fprintf(stderr, "Error processing events\n");
                   break;
               }
