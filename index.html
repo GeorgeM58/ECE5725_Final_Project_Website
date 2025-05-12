@@ -24,7 +24,7 @@
     <a onclick="document.getElementById('Design').scrollIntoView({ behavior: 'smooth' });">
       Design
     </a>
-    <a onclick="document.getElementById('Installation Guide').scrollIntoView({ behavior: 'smooth' });">
+    <a onclick="document.getElementById('Installation_Guide').scrollIntoView({ behavior: 'smooth' });">
       Installation Guide
     </a>
     <a onclick="document.getElementById('Testing').scrollIntoView({ behavior: 'smooth' });">
@@ -36,13 +36,13 @@
     <a onclick="document.getElementById('Conclusion').scrollIntoView({ behavior: 'smooth' });">
       Conclusion
     </a>
-    <a onclick="document.getElementById('Future Work').scrollIntoView({ behavior: 'smooth' });">
+    <a onclick="document.getElementById('Future_Work').scrollIntoView({ behavior: 'smooth' });">
       Future Work
     </a>
     <a onclick="document.getElementById('Budget').scrollIntoView({ behavior: 'smooth' });">
       Budget
     </a>
-    <a onclick="document.getElementById('The Team').scrollIntoView({ behavior: 'smooth' });">
+    <a onclick="document.getElementById('The_Team').scrollIntoView({ behavior: 'smooth' });">
       The Team
     </a>
     <a onclick="document.getElementById('References').scrollIntoView({ behavior: 'smooth' });">
@@ -390,7 +390,7 @@
       </p>
   </section>
 
-  <section id="Installation Guide"
+  <section id="Installation_Guide"
     style="background-color: #f9f9f9; padding: 40px 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin: 40px auto; max-width: 900px;">
     <h2 style="text-align: center; color: #2c3e50; margin-bottom: 25px;">Installation Guide</h2>
 
@@ -585,7 +585,7 @@
     </p>
   </section>
 
-  <section id="Future Work"
+  <section id="Future_Work"
     style="background-color: #f9f9f9; padding: 40px 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin: 40px auto; max-width: 900px;">
     <h2 style="text-align: center; color: #2c3e50; margin-bottom: 25px;">Future Work</h2>
     <p style="font-size: 17px; color: #333; line-height: 1.6;">
@@ -691,7 +691,7 @@
     </div>
   </section>
 
-  <section id="The Team">
+  <section id="The_Team">
     <h2>The Team</h2>
     <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
       <div
@@ -745,7 +745,7 @@
     </p>
   </section>
 
-  <section id="The Code Listing">
+  <section id="The_Code_Listing">
     <h2>The Code Listing</h2>
     <p>
     <details
@@ -776,7 +776,7 @@
       SDL_Texture *texture = NULL;
       
       int init_sdl() {
-          if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+          if (SDL_Init(SDL_INIT_VIDEO) &lt; 0) {
               fprintf(stderr, "SDL Init Not Working: %s\n", SDL_GetError());
               return -1;
           }
@@ -960,7 +960,6 @@
   </code>
     </pre>
     </details>
-    </p>
   </section>
 
   <!-- Scroll Effects Script -->
