@@ -134,12 +134,10 @@
       The Kinect provides a continuous stream of depth data to the Raspberry Pi 4 over USB 3.0 representing the
       difference between the Kinect and the sandbox.
     </p>
-    <br>
     <p>
       Projection Setup:
       A standard overhead projector, provided by Professor Skovira, is mounted above the sandbox and aligned vertically
       with the sandbox in a manner to minimize distortion. </p>
-    <br>
     <p>
       GPIO Controls:
       GPIO buttons exposed by the TFT are accessible by the Raspberry Pi.
@@ -157,19 +155,16 @@
       The system software is implemented using a combination of C and Python, leveraging the strengths of each
       language:
     </p>
-    <br>
     <p>
       C Code: Handles all performance-critical tasks such as depth data acquisition and color mapping. This choice was
       made to improve real-time responsiveness given the Raspberry Pi’s limited processing power. We used the
       libfreenect library to utilize all four cores on the Pi and get the depth data from the Kinect efficiently. This
       allowed for the real time performance that is seen in our demo.
     </p>
-    <br>
     <p>
       Python Script: Manages GPIO input and user control of the system. The Python code waits for GPIO button presses
       and on command begins the C code subprocess. It can also be used to terminate the program.
     </p>
-    <br />
 
     <h4>Data Processing Pipeline</h4>
     <p>
@@ -178,7 +173,6 @@
     <p>
       1) The Kinect begins streaming depth data.
     </p>
-    <br>
     <p>
       2) The Kinect device context <code>freenect_context</code> is initialized and it opens
       <code>freenect_device</code>.
@@ -209,7 +203,6 @@
     </code>
       </pre>
     </details>
-    <br>
     <p>
       3) The SDL2 window, renderer, and texture are initialized for displaying
       the depth data. The function init_sdl will create a window
@@ -246,13 +239,11 @@
   </code>
     </pre>
     </details>
-    <br>
     <p>
       4) Next we used the depth callback function using freenect_set_depth_callback
       to call depth_cb. This receives the depth data from the Kinect device and
       processes each pixel.
     </p>
-    <br>
     <p>
       5) Each depth value is checked to be within the range 1100 to 1700 and
       then is normalized. This normalized value is mapped to RGB colors
@@ -309,16 +300,13 @@
   </code>
     </pre>
     </details>
-    <br>
     <p>
       6) The final color-mapped image is sent to the projector, which overlays the visual representation onto the
       sand.
     </p>
-    <br>
     <p>
       This loop repeats continuously, ensuring real-time updates as users manipulate the sand.
     </p>
-    <br />
 
     <h4>Projection Mapping and Calibration</h4>
     <p>
@@ -330,23 +318,19 @@
       However, when running it from our computers, we could provide a digital offset to ensure accurate rendering.
       The depth range was also calibrated to match the typical height variations achievable within the sandbox.
     </p>
-    <br />
 
     <h4>Real-Time Optimization</h4>
     <p>
       Given the limited computational resources of the Raspberry Pi, we prioritized efficiency:
     </p>
-    <br>
     <p>
       All computationally intensive tasks, especially per-frame depth processing and color mapping, were implemented
       in
       C.
     </p>
-    <br>
     <p>
       Python was used only where performance was not critical (GPIO control).
     </p>
-    <br />
 
     <h4>Challenges and Solutions</h4>
     <p>
@@ -357,14 +341,12 @@
       that were necessary for high performance. As a result, the Lab 3 kernel had files that
       enhanced our performance that were previously removed from the Lab 4 kernel.
     </p>
-    <br>
     <p>
       Projection Alignment:
       On the computer, we could just set an offset to accurately map onto the sandbox. However, when booting from
       the Raspberry Pi, we had to make physical adjustments to the
       projector in order to try to align our projection to the sand without having an offset.
     </p>
-    <br>
     <p>
       GPIO Responsiveness:
       Handling button presses with Python's GPIO library worked reliably after implementing and
@@ -376,7 +358,6 @@
       through the Projector) at the same time which
       is why we took the GPIO button approach.
     </p>
-    <br>
     <p>
       Boot From Start:
       We found that we had issues when using Crontab in order to automate our system as everything we had tried, even
